@@ -1,0 +1,31 @@
+@media (min-width: 0px) {
+  .SMSAuth {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .SMSAuth input {
+    width: 40vw;
+    padding: 1.8vh;
+  }
+}
+
+@media (min-width: 700px) {
+  .SMSAuth input {
+    width: 265px;
+    padding: 15px;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .SMSAuth input {
+    width: 540px;
+    padding: 25px;
+    font-size: 40px;
+  }
+}

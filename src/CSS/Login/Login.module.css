@@ -1,0 +1,120 @@
+* {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@media (min-width: 0px) {
+  .loginForm {
+    border: 1px solid white;
+    width: 340px;
+    height: 530px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loginForm h1 {
+    font-size: 36px;
+  }
+  .loginFormInput {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+  }
+
+  .loginFormButton {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 325px;
+  }
+  a {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .loginForm {
+    border: 1px solid white;
+    width: 1000px;
+    height: 530px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loginForm h1 {
+    font-size: 60px;
+  }
+  .loginFormInput {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 600px;
+    font-size: 20px;
+  }
+
+  .loginFormButton {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 640px;
+    font-size: 20px;
+  }
+  a {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .loginForm {
+    border: 1px solid white;
+    width: 1200px;
+    height: 850px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loginForm h1 {
+    font-size: 80px;
+  }
+  .loginFormInput {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 600px;
+    font-size: 20px;
+  }
+
+  .loginFormButton {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 645px;
+    font-size: 20px;
+  }
+  a {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,100 @@
+@media (min-width: 0px) {
+  .menuCreateForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menuCreateForm h1,
+  h2 {
+    font-size: 16px;
+  }
+
+  .menuCreateForm input {
+    width: 200px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 10px;
+  }
+
+  .menuCreateForm textarea {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .menuCreateForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menuCreateForm h1,
+  h2 {
+    font-size: 32px;
+  }
+
+  .menuCreateForm input {
+    width: 400px;
+    margin-bottom: 10px;
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .menuCreateForm textarea {
+    width: 420px;
+    height: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .menuCreateForm button {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .menuCreateForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menuCreateForm h1,
+  h2 {
+    font-size: 48px;
+  }
+
+  .menuCreateForm input {
+    width: 800px;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-size: 40px;
+  }
+
+  .menuCreateForm textarea {
+    width: 820px;
+    height: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 40px;
+  }
+
+  .menuCreateForm button {
+    font-size: 40px;
+  }
+}

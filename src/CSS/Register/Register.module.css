@@ -1,0 +1,111 @@
+@media (min-width: 0px) {
+  .registerForm {
+    border: 1px solid white;
+    width: 380px;
+    height: 530px;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .registerFormInput {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 250px;
+  }
+
+  .registerFormButton {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 137px;
+  }
+
+  .btnWrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+  }
+  h1 {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .registerForm {
+    border: 1px solid white;
+    width: 1000px;
+    height: 530px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .registerFormInput {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 600px;
+    font-size: 20px;
+  }
+
+  .registerFormButton {
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 320px;
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .registerForm {
+    border: 1px solid white;
+    width: 1200px;
+    height: 850px;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .registerFormInput {
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 900px;
+    font-size: 40px;
+  }
+
+  .registerFormButton {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 470px;
+    font-size: 40px;
+  }
+  h1 {
+    font-size: 60px;
+  }
+}
