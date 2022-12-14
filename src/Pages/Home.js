@@ -8,12 +8,12 @@ import SMSAuth from "./SMSAuth"; // SMS 인증
 import Modal from "react-modal"; // 메뉴 조회 모달
 import MenuCreate from "./MenuCreate"; // 메뉴 등록
 import MenuAlter from "./MenuAlter"; // 메뉴 수정
-import ImageCreate from "./ImageCreate";
-import ImageAlter from "./ImageAlter";
+import EventCreate from "./eventCreate";
+import EventAlter from "./eventAlter";
 import NoticeCreate from "./NoticeCreate";
 import NoticeAlter from "./NoticeAlter";
 import MenuExcelDownload from "./MenuExcelDownload";
-import ImageExcelDownload from "./ImageExcelDownload";
+import EventExcelDownload from "./eventExcelDownload";
 import NoticeExcelDownload from "./NoticeExcelDownload";
 
 const Home = () => {
@@ -31,15 +31,15 @@ const Home = () => {
     sessionStorage.removeItem("accessToken"); // 세션 스토리지 accessToken 키 삭제
     navigate("/"); // 로그인 페이지로 이동
   };
-  const [imgModal, setImgModal] = useState(false); // 이미지 조회 모달
-  const [showImageCreate, setShowImageCreate] = useState(false); // 이미지 등록 모달 토글
-  const [imageList, setImageList] = useState({}); // 이미지 조회시 이미지 값 저장
-  const [showImageAlter, setShowImageAlter] = useState(false);
+  const [eventModal, setEventModal] = useState(false); // 이벤트 조회 모달
+  const [showEventCreate, setShowEventCreate] = useState(false); // 이벤트 등록 모달 토글
+  const [eventList, setEventList] = useState({}); // 이벤트 조회시 이벤트 값 저장
+  const [showEventAlter, setShowEventAlter] = useState(false);
   const [noticeModal, setNoticeModal] = useState(false);
   const [noticeCreateModal, setNoticeCreateModal] = useState(false);
   const [noticeList, setNoticeList] = useState({});
   const [showWriteAlter, setShowWriteAlter] = useState(false);
-
+  const [delImageUrl, setDelImageUrl] = useState("");
   useEffect(() => {
     // 세션 스토리지에 AuthForm 키의 값이 있으면 상태 변경
     if (sessionStorage.getItem("AuthForm")) {
@@ -58,7 +58,6 @@ const Home = () => {
             process.env.REACT_APP_API +
               "/api/?apikey=" +
               decrypt(element.userApiKey)
-            // +`&Category=${category}&Name=${search}`
           );
         }
       });
@@ -86,11 +85,11 @@ const Home = () => {
     setModal(!modal);
   };
 
-  const imageView = async () => {
-    // 이미지 조회 시 카테고리 지정 및 검색 값에 따른 DB 조회
-    const image = await axios.get(apiKey + `&MImage=ALL&Name=&ImageId=`);
-    setImageList(image.data);
-    setImgModal(!imgModal);
+  const eventView = async () => {
+    // 이벤트 조회 시 카테고리 지정 및 검색 값에 따른 DB 조회
+    const event = await axios.get(apiKey + `&Event=ALL&Name=&EventId=`);
+    setEventList(event.data);
+    setEventModal(!eventModal);
   };
 
   const noticeView = async () => {
@@ -109,14 +108,14 @@ const Home = () => {
     setMenuList(menu.data);
   };
 
-  const ImageForm = async (e) => {
-    // 이미지 검색 버튼 클릭 시 카테고리 및 검색 값을 설정 후 설정된 값으로 검색
+  const EventForm = async (e) => {
+    // 이벤트 검색 버튼 클릭 시 카테고리 및 검색 값을 설정 후 설정된 값으로 검색
     e.preventDefault();
     setSearch(e.target.Search.value);
-    const image = await axios.get(
-      apiKey + `&MImage=ALL&Name=${search}&ImageId=`
+    const event = await axios.get(
+      apiKey + `&Event=ALL&Name=${search}&EventId=`
     );
-    setImageList(image.data);
+    setEventList(event.data);
   };
 
   const noticeSearchForm = async (e) => {
@@ -152,23 +151,21 @@ const Home = () => {
     setShowMenuAlter(!showMenuAlter); // 모달창 온오프
   };
 
-  const onClickImageAlt = async (e) => {
+  const onClickEventAlt = async (e) => {
     e.preventDefault();
-    // 수정 버튼 클릭시 이미지 아이디 값으로 검색
+    // 수정 버튼 클릭시 이벤트 아이디 값으로 검색
 
-    const ImageId = e.target.parentElement.parentElement.children[1].innerText;
-    const res = await axios.get(
-      apiKey + `&MImage=ALL&Name=&ImageId=${ImageId}`
-    );
+    const EventId = e.target.parentElement.parentElement.children[1].innerText;
+    const res = await axios.get(apiKey + `&Event=ALL&Name=&EventId=${EventId}`);
     setMenuInfo(res.data); // 수정할 항목을 검색해서 정보 재설정
-    setShowImageAlter(!showImageAlter); // 모달창 온오프
+    setShowEventAlter(!showEventAlter); // 모달창 온오프
   };
 
   const onClickWriteAlt = async (e) => {
     e.preventDefault();
     // 수정 버튼 클릭시 게시글 아이디 값으로 검색
 
-    const WriteId = e.target.parentElement.parentElement.children[3].innerText;
+    const WriteId = e.target.parentElement.parentElement.children[1].innerText;
     const res = await axios.get(
       apiKey + `&Notice=ALL&Title=&writeId=${WriteId}`
     );
@@ -199,21 +196,26 @@ const Home = () => {
     }
   };
 
-  const onClickImageDel = async (e) => {
-    // 이미지 ID를 조건으로 맞으면 삭제
+  const onClickEventDel = async (e) => {
+    // 이벤트 ID를 조건으로 맞으면 삭제
     e.preventDefault();
-    const ImageId = e.target.parentElement.parentElement.children[1].innerText;
-
+    const EventId = e.target.parentElement.parentElement.children[1].innerText;
+    eventList.find((el) => {
+      if (el.EventId === EventId) {
+        setDelImageUrl(el.Image);
+      }
+    });
     try {
       await axios
-        .post(process.env.REACT_APP_API + "/image/delete", {
-          ImageId,
+        .post(process.env.REACT_APP_API + "/event/delete", {
+          EventId,
+          delImageUrl,
         })
         .then(
           // 삭제가 완료되면 목록 갱신을 위해 전체 조회
-          setImageList(
+          setEventList(
             await (
-              await axios.get(apiKey + `&MImage=ALL&Name=&ImageId=`)
+              await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
             ).data
           )
         );
@@ -225,7 +227,7 @@ const Home = () => {
   const onClickWriteDel = async (e) => {
     // 게시글 ID를 조건으로 맞으면 삭제
     e.preventDefault();
-    const WriteId = e.target.parentElement.parentElement.children[3].innerText;
+    const WriteId = e.target.parentElement.parentElement.children[1].innerText;
 
     try {
       await axios
@@ -245,9 +247,9 @@ const Home = () => {
     }
   };
 
-  const showImageCreateModal = () => {
-    // 이미지 등록 모달 토글
-    setShowImageCreate(!showImageCreate);
+  const showEventCreateModal = () => {
+    // 이벤트 등록 모달 토글
+    setShowEventCreate(!showEventCreate);
   };
 
   let count = 1;
@@ -275,7 +277,7 @@ const Home = () => {
             <div className={style.menubar}>
               <span>
                 <button onClick={menuView}>메뉴 관리</button>
-                <button onClick={imageView}>이미지 관리</button>
+                <button onClick={eventView}>이벤트 관리</button>
                 <button onClick={noticeView}>공지 사항 관리</button>
               </span>
             </div>
@@ -394,26 +396,26 @@ const Home = () => {
         </button>
       </Modal>
       <Modal
-        isOpen={imgModal}
+        isOpen={eventModal}
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
         {/* 인자 값이 배열일 경우 */}
-        {Array.isArray(imageList) ? (
+        {Array.isArray(eventList) ? (
           <>
             <div>
-              <form onSubmit={ImageForm} className={style.searchForm}>
+              <form onSubmit={EventForm} className={style.searchForm}>
                 <input placeholder="Search Bar" name="Search" />
-                <button>이미지 검색</button>
-                <button onClick={showImageCreateModal}>이미지 등록</button>
-                <button onClick={() => setImgModal(!imgModal)}>닫기</button>
+                <button>이벤트 검색</button>
+                <button onClick={showEventCreateModal}>이벤트 등록</button>
+                <button onClick={() => setEventModal(!eventModal)}>닫기</button>
               </form>
             </div>
-            <ImageExcelDownload apiKey={apiKey} />
+            <EventExcelDownload apiKey={apiKey} />
             <div className={style.ItemList}>
               <span>번호</span>
-              <span>사이트이미지</span>
-              <span>이미지 고유번호</span>
+              <span>이벤트 이미지</span>
+              <span>이벤트 고유번호</span>
               <span>이름</span>
               <span>상세설명</span>
               <span>수정/삭제</span>
@@ -422,22 +424,22 @@ const Home = () => {
         ) : null}
         <div className={style.ItemListWrap}>
           {/* 인자가 배열일 경우 map 사용 */}
-          {Array.isArray(imageList)
-            ? imageList.map((image, idx) => {
+          {Array.isArray(eventList)
+            ? eventList.map((event, idx) => {
                 return (
                   <div key={idx} className={style.ItemList}>
                     {/* 조회된 아이템에 따라 카운트 증가 */}
                     {imgCount++}
                     <img
-                      src={process.env.REACT_APP_API + image.Image}
+                      src={process.env.REACT_APP_API + event.Image}
                       width="50"
                     />
-                    <span>{image.ImageId}</span>
-                    <span>{image.Name}</span>
-                    <span>{image.Desc}</span>
+                    <span>{event.EventId}</span>
+                    <span>{event.Name}</span>
+                    <span>{event.Desc}</span>
                     <span>
-                      <button onClick={onClickImageAlt}>수정</button>
-                      <button onClick={onClickImageDel}>삭제</button>
+                      <button onClick={onClickEventAlt}>수정</button>
+                      <button onClick={onClickEventDel}>삭제</button>
                     </span>
                   </div>
                 );
@@ -445,22 +447,22 @@ const Home = () => {
             : null}
         </div>
         {/* 배열은 0부터 시작하기에 -1 해줌 */}
-        검색 된 이미지 수 :{imgCount - 1}
+        검색 된 이벤트 수 :{imgCount - 1}
       </Modal>
       <Modal
-        isOpen={showImageCreate}
+        isOpen={showEventCreate}
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
-        {/* 사이트 이미지 등록 */}
-        <ImageCreate apiKey={apiKey} />
+        {/* 이벤트 등록 */}
+        <EventCreate valid={eventList} />
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowImageCreate(!showImageCreate);
-            setImageList(
+            setShowEventCreate(!showEventCreate);
+            setEventList(
               await (
-                await axios.get(apiKey + `&MImage=ALL&Name=&ImageId=`)
+                await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
               ).data
             );
           }}
@@ -469,19 +471,19 @@ const Home = () => {
         </button>
       </Modal>
       <Modal
-        isOpen={showImageAlter}
+        isOpen={showEventAlter}
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
-        <ImageAlter menu={menuInfo} />
+        <EventAlter menu={menuInfo} />
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowImageAlter(!showImageAlter);
-            setImageList(
+            setShowEventAlter(!showEventAlter);
+            setEventList(
               await (
-                await axios.get(apiKey + `&MImage=ALL&Name=&ImageId=`)
+                await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
               ).data
             );
           }}
@@ -511,10 +513,10 @@ const Home = () => {
             <NoticeExcelDownload apiKey={apiKey} />
             <div className={style.ItemList}>
               <span>번호</span>
-              <span>날짜</span>
+              <span>게시글 ID</span>
               <span>제목</span>
               <span>내용</span>
-              <span>게시글 ID</span>
+              <span>날짜</span>
               <span>수정/삭제</span>
             </div>
           </>
@@ -526,11 +528,15 @@ const Home = () => {
                 return (
                   <div key={idx} className={style.ItemList}>
                     {/* 조회된 아이템에 따라 카운트 증가 */}
-                    {noticeCount++}
-                    <span>{notice.Date}</span>
+                    <span>{noticeCount++}</span>
+                    <span>{notice.Id}</span>
                     <span>{notice.Title}</span>
                     <span>{notice.Desc}</span>
-                    <span>{notice.Id}</span>
+                    <span>{notice.Date}</span>
+                    <img
+                      src={process.env.REACT_APP_API + notice.Image}
+                      width="50"
+                    />
                     <span>
                       <button onClick={onClickWriteAlt}>수정</button>
                       <button onClick={onClickWriteDel}>삭제</button>
@@ -541,7 +547,7 @@ const Home = () => {
             : null}
         </div>
         {/* 배열은 0부터 시작하기에 -1 해줌 */}
-        검색 된 이미지 수 :{noticeCount - 1}
+        검색 된 공지 수 :{noticeCount - 1}
       </Modal>
       <Modal
         isOpen={noticeCreateModal}
@@ -549,7 +555,7 @@ const Home = () => {
         className={style.Modal}
       >
         {/* 사이트 공지사항 등록 */}
-        <NoticeCreate apiKey={apiKey} />
+        <NoticeCreate valid={noticeList} />
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회

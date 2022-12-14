@@ -42,31 +42,33 @@ const Login = () => {
     e.target.password.value = "";
   };
   return (
-    <form onSubmit={loginSubmit} className={style.loginForm}>
-      <h1>스탑없으 API 서비스</h1>
-      {/* 타입에 email일 경우 이메일 형식 지켜야함 */}
-      <input
-        className={style.loginFormInput}
-        type="email"
-        name="email"
-        placeholder="email"
-        required
-      />
-      {/* 비밀번호는 정규표현식을 패턴값으로 적용 html 태그 속성에 보인다는게 단점 */}
-      <input
-        className={style.loginFormInput}
-        type="password"
-        name="password"
-        placeholder="영문,대소문자,숫자,특수문자 포함 8~16자"
-        required
-        pattern="^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$"
-      />
-      <button className={style.loginFormButton} type="submit">
-        로그인
-      </button>
-      {/* 링크를 이용하여 회원가입 페이지 이동 */}
-      <Link to="/register">아직 회원이 아니신가요?</Link>
-    </form>
+    <>
+      <form onSubmit={loginSubmit} className={style.loginForm}>
+        <h1>스탑없으 API 서비스</h1>
+        {/* 타입에 email일 경우 이메일 형식 지켜야함 */}
+        <input
+          className={style.loginFormInput}
+          type="email"
+          name="email"
+          placeholder="email"
+          required
+        />
+        {/* 비밀번호는 정규표현식을 패턴값으로 적용 html 태그 속성에 보인다는게 단점 */}
+        <input
+          className={style.loginFormInput}
+          type="password"
+          name="password"
+          placeholder="영문,대소문자,숫자,특수문자 포함 8~16자"
+          required
+          pattern="^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$"
+        />
+        <button className={style.loginFormButton} type="submit">
+          로그인
+        </button>
+        {/* 링크를 이용하여 회원가입 페이지 이동 */}
+        <Link to="/register">아직 회원이 아니신가요?</Link>
+      </form>
+    </>
   );
 };
 

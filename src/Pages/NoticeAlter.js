@@ -11,6 +11,7 @@ const NoticeAlter = ({ menu }) => {
       Title: menu[0].Title,
       Desc: menu[0].Desc,
       Id: menu[0].Id,
+      Image: menu[0].Image,
     });
   }, []);
 
@@ -20,14 +21,15 @@ const NoticeAlter = ({ menu }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("Title", e.target.Title.value);
+    formData.append("Desc", e.target.Desc.value);
+    formData.append("Id", e.target.Id.value);
+    formData.append("Image", e.target.ImgFile.files[0]);
 
     try {
       // 정보 수정후 등록
-      await axios.post(process.env.REACT_APP_API + "/notice/alter", {
-        Title: e.target.Title.value,
-        Desc: e.target.Desc.value,
-        Id: e.target.Id.value,
-      });
+      await axios.post(process.env.REACT_APP_API + "/notice/alter", formData);
     } catch (error) {
       console.error(error);
     }
@@ -38,9 +40,10 @@ const NoticeAlter = ({ menu }) => {
       <h1>공지 수정</h1>
       <input
         type="text"
-        name="Date"
-        placeholder="작성 일자"
-        value={altNotice.Date}
+        name="Id"
+        placeholder="게시글Id"
+        required
+        value={altNotice.Id}
         onChange={onChange}
         disabled
       />
@@ -61,10 +64,23 @@ const NoticeAlter = ({ menu }) => {
       />
       <input
         type="text"
-        name="Id"
-        placeholder="게시글Id"
-        required
-        value={altNotice.Id}
+        name="Image"
+        placeholder="이미지 주소"
+        value={altNotice.Image}
+        onChange={onChange}
+        disabled
+      />
+      <input
+        type="file"
+        name="ImgFile"
+        accept="image/*"
+        placeholder="이미지파일"
+      />
+      <input
+        type="text"
+        name="Date"
+        placeholder="작성 일자"
+        value={altNotice.Date}
         onChange={onChange}
         disabled
       />

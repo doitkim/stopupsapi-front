@@ -3,10 +3,10 @@ import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
-const ImageExcelDownload = ({ apiKey }) => {
+const EventExcelDownload = ({ apiKey }) => {
   const [data, setData] = useState({});
   const getAxios = async () => {
-    const res = await axios.get(apiKey + `&MImage=ALL&Name=&ImageId=`);
+    const res = await axios.get(apiKey + `&Event=ALL&Name=&EventId=`);
     setData(res.data);
   };
   useEffect(() => {
@@ -19,11 +19,11 @@ const ImageExcelDownload = ({ apiKey }) => {
   const excelFileName = "이미지 현황";
 
   const excelDownload = (excelData) => {
-    const ws = XLSX.utils.aoa_to_sheet([["ImageId", "Name", "Image", "Desc"]]);
+    const ws = XLSX.utils.aoa_to_sheet([["EventId", "Name", "Image", "Desc"]]);
     excelData.map((data) => {
       XLSX.utils.sheet_add_aoa(
         ws,
-        [[data.ImageId, data.Name, data.Image, data.Desc]],
+        [[data.EventId, data.Name, data.Image, data.Desc]],
         {
           origin: -1,
         }
@@ -53,4 +53,4 @@ const ImageExcelDownload = ({ apiKey }) => {
   );
 };
 
-export default ImageExcelDownload;
+export default EventExcelDownload;
