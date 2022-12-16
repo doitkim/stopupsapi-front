@@ -22,15 +22,20 @@ const NoticeCreate = ({ valid }) => {
         setMessage("공지사항 제목 중복 확인 바람");
       }
     });
-    const formData = new FormData();
-    formData.append("writeDate", e.target.작성일자.value);
-    formData.append("writeTitle", e.target.제목.value);
-    formData.append("writeContent", e.target.내용.value);
-    formData.append("writeId", e.target.게시글ID.value);
-    formData.append("writeImage", e.target.ImgFile.files[0]);
+    const writeDate = e.target.작성일자.value;
+    const writeTitle = e.target.제목.value;
+    const writeContent = e.target.내용.value;
+    const writeId = e.target.게시글ID.value;
+    const writeIndex = e.target.글번호.value;
 
     try {
-      await axios.post(process.env.REACT_APP_API + "/notice/create", formData);
+      await axios.post(process.env.REACT_APP_API + "/notice/create", {
+        writeDate,
+        writeTitle,
+        writeContent,
+        writeId,
+        writeIndex,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -55,14 +60,9 @@ const NoticeCreate = ({ valid }) => {
         onChange={onChange}
         disabled
       />
+      <input type="text" placeholder="글번호" name="글번호" />
       <input type="text" placeholder="제목" name="제목" />
       <textarea placeholder="내용" name="내용" />
-      <input
-        type="file"
-        name="ImgFile"
-        accept="image/*"
-        placeholder="이미지파일"
-      />
       <span>
         <button>등록</button>
       </span>

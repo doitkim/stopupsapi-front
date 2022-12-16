@@ -109,8 +109,15 @@
     margin-top: 8px;
     font-size: 8px;
   }
+
+  .ItemList .imageList {
+    width: 50px;
+    height: 50px;
+    overflow-y: auto;
+  }
+
   .ItemList img {
-    width: 40px;
+    width: 50px;
   }
 }
 
@@ -219,6 +226,16 @@
     width: 958px;
     padding: 10px;
     font-size: 18px;
+  }
+
+  .ItemList .imageList {
+    width: 150px;
+    height: 100px;
+    overflow-y: auto;
+  }
+
+  .ItemList img {
+    width: 150px;
   }
 
   .ItemList button {

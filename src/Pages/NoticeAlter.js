@@ -11,7 +11,7 @@ const NoticeAlter = ({ menu }) => {
       Title: menu[0].Title,
       Desc: menu[0].Desc,
       Id: menu[0].Id,
-      Image: menu[0].Image,
+      Num: menu[0].Num,
     });
   }, []);
 
@@ -21,15 +21,18 @@ const NoticeAlter = ({ menu }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("Title", e.target.Title.value);
-    formData.append("Desc", e.target.Desc.value);
-    formData.append("Id", e.target.Id.value);
-    formData.append("Image", e.target.ImgFile.files[0]);
-
+    const Title = e.target.Title.value;
+    const Desc = e.target.Desc.value;
+    const Id = e.target.Id.value;
+    const Num = e.target.Num.value;
     try {
       // 정보 수정후 등록
-      await axios.post(process.env.REACT_APP_API + "/notice/alter", formData);
+      await axios.post(process.env.REACT_APP_API + "/notice/alter", {
+        Title,
+        Desc,
+        Id,
+        Num,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -38,6 +41,14 @@ const NoticeAlter = ({ menu }) => {
   return (
     <form className={style.menuCreateForm} onSubmit={onSubmit}>
       <h1>공지 수정</h1>
+      <input
+        type="text"
+        name="Num"
+        placeholder="글번호"
+        required
+        value={altNotice.Num}
+        onChange={onChange}
+      />
       <input
         type="text"
         name="Id"
@@ -61,20 +72,6 @@ const NoticeAlter = ({ menu }) => {
         required
         value={altNotice.Desc}
         onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Image"
-        placeholder="이미지 주소"
-        value={altNotice.Image}
-        onChange={onChange}
-        disabled
-      />
-      <input
-        type="file"
-        name="ImgFile"
-        accept="image/*"
-        placeholder="이미지파일"
       />
       <input
         type="text"

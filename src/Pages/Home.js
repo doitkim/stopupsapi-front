@@ -40,6 +40,7 @@ const Home = () => {
   const [noticeList, setNoticeList] = useState({});
   const [showWriteAlter, setShowWriteAlter] = useState(false);
   const [delImageUrl, setDelImageUrl] = useState("");
+
   useEffect(() => {
     // 세션 스토리지에 AuthForm 키의 값이 있으면 상태 변경
     if (sessionStorage.getItem("AuthForm")) {
@@ -87,7 +88,7 @@ const Home = () => {
 
   const eventView = async () => {
     // 이벤트 조회 시 카테고리 지정 및 검색 값에 따른 DB 조회
-    const event = await axios.get(apiKey + `&Event=ALL&Name=&EventId=`);
+    const event = await axios.get(apiKey + `&Event=ALL&Title=&EventId=`);
     setEventList(event.data);
     setEventModal(!eventModal);
   };
@@ -113,7 +114,7 @@ const Home = () => {
     e.preventDefault();
     setSearch(e.target.Search.value);
     const event = await axios.get(
-      apiKey + `&Event=ALL&Name=${search}&EventId=`
+      apiKey + `&Event=ALL&Title=${search}&EventId=`
     );
     setEventList(event.data);
   };
@@ -155,8 +156,10 @@ const Home = () => {
     e.preventDefault();
     // 수정 버튼 클릭시 이벤트 아이디 값으로 검색
 
-    const EventId = e.target.parentElement.parentElement.children[1].innerText;
-    const res = await axios.get(apiKey + `&Event=ALL&Name=&EventId=${EventId}`);
+    const EventId = e.target.parentElement.parentElement.children[2].innerText;
+    const res = await axios.get(
+      apiKey + `&Event=ALL&Title=&EventId=${EventId}`
+    );
     setMenuInfo(res.data); // 수정할 항목을 검색해서 정보 재설정
     setShowEventAlter(!showEventAlter); // 모달창 온오프
   };
@@ -199,7 +202,7 @@ const Home = () => {
   const onClickEventDel = async (e) => {
     // 이벤트 ID를 조건으로 맞으면 삭제
     e.preventDefault();
-    const EventId = e.target.parentElement.parentElement.children[1].innerText;
+    const EventId = e.target.parentElement.parentElement.children[2].innerText;
     eventList.find((el) => {
       if (el.EventId === EventId) {
         setDelImageUrl(el.Image);
@@ -215,7 +218,7 @@ const Home = () => {
           // 삭제가 완료되면 목록 갱신을 위해 전체 조회
           setEventList(
             await (
-              await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
+              await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
             ).data
           )
         );
@@ -227,7 +230,7 @@ const Home = () => {
   const onClickWriteDel = async (e) => {
     // 게시글 ID를 조건으로 맞으면 삭제
     e.preventDefault();
-    const WriteId = e.target.parentElement.parentElement.children[1].innerText;
+    const WriteId = e.target.parentElement.parentElement.children[2].innerText;
 
     try {
       await axios
@@ -414,10 +417,11 @@ const Home = () => {
             <EventExcelDownload apiKey={apiKey} />
             <div className={style.ItemList}>
               <span>번호</span>
-              <span>이벤트 이미지</span>
-              <span>이벤트 고유번호</span>
-              <span>이름</span>
-              <span>상세설명</span>
+              <span>이미지</span>
+              <span>작성일자</span>
+              <span>고유번호</span>
+              <span>제목</span>
+              <span>기간</span>
               <span>수정/삭제</span>
             </div>
           </>
@@ -430,13 +434,24 @@ const Home = () => {
                   <div key={idx} className={style.ItemList}>
                     {/* 조회된 아이템에 따라 카운트 증가 */}
                     {imgCount++}
-                    <img
-                      src={process.env.REACT_APP_API + event.Image}
-                      width="50"
-                    />
+                    <div className={style.imageList}>
+                      {event.Image ? (
+                        <>
+                          {Object.keys(event.Image).map((e, idx) => {
+                            return (
+                              <img
+                                key={idx}
+                                src={process.env.REACT_APP_API + event.Image[e]}
+                              />
+                            );
+                          })}
+                        </>
+                      ) : null}
+                    </div>
+                    <span>{event.Date}</span>
                     <span>{event.EventId}</span>
-                    <span>{event.Name}</span>
-                    <span>{event.Desc}</span>
+                    <span>{event.Title}</span>
+                    <span>{event.EventTime}</span>
                     <span>
                       <button onClick={onClickEventAlt}>수정</button>
                       <button onClick={onClickEventDel}>삭제</button>
@@ -462,7 +477,7 @@ const Home = () => {
             setShowEventCreate(!showEventCreate);
             setEventList(
               await (
-                await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
+                await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
               ).data
             );
           }}
@@ -483,7 +498,7 @@ const Home = () => {
             setShowEventAlter(!showEventAlter);
             setEventList(
               await (
-                await axios.get(apiKey + `&Event=ALL&Name=&EventId=`)
+                await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
               ).data
             );
           }}
@@ -513,6 +528,7 @@ const Home = () => {
             <NoticeExcelDownload apiKey={apiKey} />
             <div className={style.ItemList}>
               <span>번호</span>
+              <span>글번호</span>
               <span>게시글 ID</span>
               <span>제목</span>
               <span>내용</span>
@@ -529,14 +545,11 @@ const Home = () => {
                   <div key={idx} className={style.ItemList}>
                     {/* 조회된 아이템에 따라 카운트 증가 */}
                     <span>{noticeCount++}</span>
+                    <span>{notice.Num}</span>
                     <span>{notice.Id}</span>
                     <span>{notice.Title}</span>
                     <span>{notice.Desc}</span>
                     <span>{notice.Date}</span>
-                    <img
-                      src={process.env.REACT_APP_API + notice.Image}
-                      width="50"
-                    />
                     <span>
                       <button onClick={onClickWriteAlt}>수정</button>
                       <button onClick={onClickWriteDel}>삭제</button>

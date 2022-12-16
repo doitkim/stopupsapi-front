@@ -6,7 +6,7 @@ import * as XLSX from "xlsx";
 const EventExcelDownload = ({ apiKey }) => {
   const [data, setData] = useState({});
   const getAxios = async () => {
-    const res = await axios.get(apiKey + `&Event=ALL&Name=&EventId=`);
+    const res = await axios.get(apiKey + `&Event=ALL&Title=&EventId=`);
     setData(res.data);
   };
   useEffect(() => {
@@ -19,15 +19,22 @@ const EventExcelDownload = ({ apiKey }) => {
   const excelFileName = "이미지 현황";
 
   const excelDownload = (excelData) => {
-    const ws = XLSX.utils.aoa_to_sheet([["EventId", "Name", "Image", "Desc"]]);
+    const ws = XLSX.utils.aoa_to_sheet([
+      ["Date", "EventId", "Title", "EventTime", "Image"],
+    ]);
     excelData.map((data) => {
-      XLSX.utils.sheet_add_aoa(
-        ws,
-        [[data.EventId, data.Name, data.Image, data.Desc]],
-        {
-          origin: -1,
-        }
-      );
+      if (data.Image) {
+        Object.values(data.Image).map((e) => {
+          console.log(e);
+          XLSX.utils.sheet_add_aoa(
+            ws,
+            [[data.Date, data.EventId, data.Title, data.EventTime, e]],
+            {
+              origin: -1,
+            }
+          );
+        });
+      }
       ws["!cols"] = [
         // 행 사이즈
         { wpx: 200 },
