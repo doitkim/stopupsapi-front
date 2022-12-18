@@ -9,25 +9,26 @@
   }
 
   .noticeForm h1 {
-    font-size: 36px;
+    font-size: 5vw;
   }
   .noticeForm input {
     padding: 10px;
     margin-bottom: 10px;
-    width: 200px;
+    width: 55vw;
   }
 
   .noticeForm button {
-    width: 225px;
+    padding: 2px;
+    width: 20vw;
   }
   .noticeForm textarea {
-    width: 220px;
-    height: 130px;
+    width: 57vw;
+    height: 20vh;
     margin-bottom: 10px;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 700px) {
   .noticeForm {
     display: flex;
     flex-direction: column;
@@ -35,6 +36,10 @@
     align-content: center;
     justify-content: center;
     align-items: center;
+  }
+
+  .noticeForm h1 {
+    font-size: 36px;
   }
 
   .noticeForm input {
@@ -47,42 +52,12 @@
   .noticeForm button {
     width: 405px;
     font-size: 18px;
+    margin-bottom: 30px;
   }
 
   .noticeForm textarea {
     width: 400px;
     height: 200px;
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 1500px) {
-  .noticeForm {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .noticeForm input {
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 1200px;
-    font-size: 18px;
-  }
-
-  .noticeForm button {
-    width: 1220px;
-    font-size: 18px;
-    padding: 10px;
-  }
-
-  .noticeForm textarea {
-    width: 1215px;
-    height: 550px;
     margin-bottom: 10px;
     font-size: 18px;
   }

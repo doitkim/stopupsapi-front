@@ -49,6 +49,7 @@ const SMSAuth = () => {
 
   return (
     <>
+      <h3>휴대폰 인증</h3>
       {/* 인증 여부에 따라 작동 */}
       {authForm ? (
         <>{alert("인증 완료")}</>

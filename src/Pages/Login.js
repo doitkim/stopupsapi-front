@@ -22,9 +22,9 @@ const Login = () => {
     // DOM의 태그들의 이름의 값 저장
     const userId = e.target.email.value;
     const userPw = e.target.password.value;
-
+    const API = process.env.REACT_APP_API;
     // 유저 정보 조회
-    const res = await axios.get(process.env.REACT_APP_API + "/users");
+    const res = await axios.get(API + "/users");
     const users = res.data;
 
     // 유저 인증 (DB에 암호화 되어있는 데이터를 복호화 해서 비교)
@@ -44,7 +44,6 @@ const Login = () => {
   return (
     <>
       <form onSubmit={loginSubmit} className={style.loginForm}>
-        <h1>스탑없으 API 서비스</h1>
         {/* 타입에 email일 경우 이메일 형식 지켜야함 */}
         <input
           className={style.loginFormInput}

@@ -1,33 +1,43 @@
 @media (min-width: 0px) {
+  button:hover {
+    background-color: #1e3932;
+    color: white;
+  }
   .apiKeyForm {
-    border: 1px solid white;
-    width: 340px;
-    height: 530px;
+    background-color: tomato;
+    height: 88vh;
     display: flex;
     flex-direction: column;
     align-content: center;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: nowrap;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
   }
 
-  .apiKeyForm h1 {
-    font-size: 32px;
+  .apiKeyForm h3 {
+    font-size: 3.5vw;
   }
 
   .apiKeyForm p {
     font-size: 20px;
   }
 
+  .apiKeyForm span {
+    padding: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
   .apiKeyForm button {
-    padding: 20px;
-    font-size: 13px;
+    border-radius: 120px;
+    padding: 10px;
+    font-size: 2.5vw;
+    margin: 10px;
+    width: 40vw;
   }
 
   .apiKeySpace {
@@ -46,18 +56,15 @@
 
   .Modal {
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     margin-left: auto;
     margin-right: auto;
-    width: 345px;
-    height: 580px;
+    height: 93vh;
     overflow-y: auto;
     font-size: 15px;
-  }
-
-  ::-webkit-scrollbar {
-    display: none;
+    background-color: tomato;
+    color: #1e3932;
   }
 
   .searchForm {
@@ -65,34 +72,33 @@
     flex-direction: row;
     align-content: center;
     justify-content: center;
-    padding: 5px;
+    margin-bottom: 5px;
     flex-wrap: nowrap;
   }
 
   .searchForm select {
-    width: 50px;
+    width: 10vw;
   }
   .searchForm input {
-    width: 130px;
+    width: 95vw;
   }
 
   .searchForm button {
-    font-size: 12px;
+    font-size: 3vw;
     width: 200px;
   }
 
   .ItemListWrap {
     margin-left: auto;
     margin-right: auto;
-    width: 345px;
-    height: 480px;
+    height: 650px;
     overflow-y: auto;
   }
 
   .ItemList {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    flex-wrap: wrap;
     align-content: center;
     justify-content: space-evenly;
     align-items: center;
@@ -100,62 +106,67 @@
     margin-right: auto;
     margin-left: auto;
     border: 1px solid white;
-    width: 310px;
     padding: 10px;
-    font-size: 12px;
+    font-size: 2.8vw;
   }
 
   .ItemList button {
     margin-top: 8px;
-    font-size: 8px;
+    font-size: 2.8vw;
   }
 
   .ItemList .imageList {
-    width: 50px;
-    height: 50px;
+    width: 40vw;
+    height: 20vh;
     overflow-y: auto;
   }
 
   .ItemList img {
-    width: 50px;
+    width: 40vw;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 700px) {
   .apiKeyForm {
-    border: 1px solid white;
-    width: 1000px;
-    height: 530px;
+    background-color: tomato;
+    height: 88vh;
     display: flex;
     flex-direction: column;
     align-content: center;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: nowrap;
     text-align: center;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
   }
 
-  .apiKeyForm h1 {
-    font-size: 50px;
+  .apiKeyForm h3 {
+    font-size: 24px;
   }
 
   .apiKeyForm p {
     font-size: 20px;
   }
 
-  .apiKeyForm button {
+  .apiKeyForm span {
     padding: 10px;
-    font-size: 25px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
+  .apiKeyForm button {
+    border-radius: 120px;
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px;
+    width: 278px;
   }
 
   .apiKeySpace {
-    margin-bottom: 10px;
-    font-size: 26px;
+    margin-bottom: 5px;
+    font-size: 15px;
   }
 
   .menubar {
@@ -169,46 +180,37 @@
 
   .Modal {
     padding: 20px;
-    margin-top: 34px;
-    margin-bottom: 34px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
-    height: 530px;
     overflow-y: auto;
-    font-size: 25px;
+    font-size: 15px;
   }
-  .Modal button {
-    font-size: 25px;
-  }
+
   .searchForm {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    padding: 10px;
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
   }
 
   .searchForm select {
-    width: 100px;
-    font-size: 18px;
+    width: 10vw;
   }
   .searchForm input {
-    width: 380px;
-    font-size: 18px;
+    width: 95vw;
   }
 
   .searchForm button {
-    font-size: 20px;
-    width: 150px;
+    font-size: 18px;
+    width: 30vw;
   }
 
   .ItemListWrap {
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
-    height: 380px;
+    height: 680px;
     overflow-y: auto;
   }
 
@@ -223,138 +225,22 @@
     margin-right: auto;
     margin-left: auto;
     border: 1px solid white;
-    width: 958px;
     padding: 10px;
     font-size: 18px;
   }
 
+  .ItemList button {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+
   .ItemList .imageList {
-    width: 150px;
-    height: 100px;
+    width: 280px;
+    height: 200px;
     overflow-y: auto;
   }
 
   .ItemList img {
-    width: 150px;
-  }
-
-  .ItemList button {
-    margin-top: 10px;
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 1500px) {
-  .apiKeyForm {
-    border: 1px solid white;
-    width: 1200px;
-    height: 850px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    text-align: center;
-    margin-top: 45px;
-    margin-bottom: 45px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-  }
-
-  .apiKeyForm h1 {
-    font-size: 70px;
-  }
-
-  .apiKeyForm p {
-    font-size: 30px;
-  }
-
-  .apiKeyForm button {
-    padding: 20px;
-    font-size: 30px;
-  }
-
-  .apiKeySpace {
-    margin-bottom: 20px;
-    font-size: 30px;
-  }
-
-  .menubar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .Modal {
-    padding: 20px;
-    margin-top: 34px;
-    margin-bottom: 34px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1800px;
-    height: 900px;
-    overflow-y: auto;
-    font-size: 36px;
-  }
-
-  .Modal button {
-    font-size: 40px;
-  }
-
-  .searchForm {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .searchForm select {
-    width: 150px;
-    font-size: 36px;
-  }
-  .searchForm input {
-    width: 800px;
-    font-size: 36px;
-  }
-
-  .searchForm button {
-    font-size: 36px;
-    width: 200px;
-  }
-
-  .ItemListWrap {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1600px;
-    height: 660px;
-    overflow-y: auto;
-  }
-
-  .ItemList {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-bottom: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    border: 1px solid white;
-    width: 1515px;
-    padding: 20px;
-    font-size: 36px;
-  }
-
-  .ItemList button {
-    margin-top: 20px;
-    font-size: 36px;
+    width: 260px;
   }
 }

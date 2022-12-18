@@ -1,10 +1,6 @@
 @media (min-width: 0px) {
   .registerForm {
-    border: 1px solid white;
-    width: 380px;
-    height: 530px;
-    margin-top: 10vh;
-    margin-bottom: 10vh;
+    height: 88vh;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -13,18 +9,20 @@
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    background-color: tomato;
   }
 
   .registerFormInput {
     padding: 10px;
     margin-bottom: 10px;
-    width: 250px;
+    width: 72vw;
   }
 
   .registerFormButton {
     padding: 10px;
     margin-bottom: 10px;
-    width: 137px;
+    width: 37.2vw;
+    font-size: 2vw;
   }
 
   .btnWrap {
@@ -36,17 +34,14 @@
     align-items: center;
   }
   h1 {
-    font-size: 25px;
+    font-size: 5vw;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 700px) {
   .registerForm {
-    border: 1px solid white;
-    width: 1000px;
-    height: 530px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 88vh;
+
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -72,40 +67,5 @@
   }
   h1 {
     font-size: 40px;
-  }
-}
-
-@media (min-width: 1500px) {
-  .registerForm {
-    border: 1px solid white;
-    width: 1200px;
-    height: 850px;
-    margin-top: 45px;
-    margin-bottom: 45px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .registerFormInput {
-    padding: 20px;
-    margin-bottom: 20px;
-    width: 900px;
-    font-size: 40px;
-  }
-
-  .registerFormButton {
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 470px;
-    font-size: 40px;
-  }
-  h1 {
-    font-size: 60px;
   }
 }

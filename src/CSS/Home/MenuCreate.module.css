@@ -10,26 +10,44 @@
 
   .menuCreateForm h1,
   h2 {
-    font-size: 16px;
+    font-size: 2.5vw;
   }
 
   .menuCreateForm input {
-    width: 200px;
+    width: 60vw;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 10px;
+    padding: 2vw;
+    font-size: 2.5vw;
+    border-radius: 20px;
+    border: 0;
   }
 
   .menuCreateForm textarea {
-    width: 200px;
-    height: 200px;
+    width: 60vw;
+    height: 20vh;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 10px;
+    padding: 2vw;
+    font-size: 2.5vw;
+    border-radius: 20px;
+    border: 0;
+  }
+  .menuCreateForm button {
+    width: 20vw;
+    padding: 1vw;
+    font-size: 2.5vw;
+    border-radius: 20px;
+    border: 0;
+  }
+  .menuCreateForm img {
+    width: 60vw;
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 700px) {
   .menuCreateForm {
     display: flex;
     flex-direction: column;
@@ -41,7 +59,7 @@
 
   .menuCreateForm h1,
   h2 {
-    font-size: 32px;
+    font-size: 25px;
   }
 
   .menuCreateForm input {
@@ -60,41 +78,10 @@
   }
 
   .menuCreateForm button {
-    font-size: 25px;
+    font-size: 18px;
+    width: 440px;
   }
-}
-
-@media (min-width: 1500px) {
-  .menuCreateForm {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .menuCreateForm h1,
-  h2 {
-    font-size: 48px;
-  }
-
-  .menuCreateForm input {
-    width: 800px;
-    margin-bottom: 20px;
-    padding: 20px;
-    font-size: 40px;
-  }
-
-  .menuCreateForm textarea {
-    width: 820px;
-    height: 300px;
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 40px;
-  }
-
-  .menuCreateForm button {
-    font-size: 40px;
+  .menuCreateForm img {
+    width: 400px;
   }
 }

@@ -1,31 +1,32 @@
 @media (min-width: 0px) {
   .SMSAuth {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-content: center;
     justify-content: center;
     align-items: center;
+    width: 60vw;
+    flex-wrap: wrap;
   }
 
   .SMSAuth input {
-    width: 40vw;
-    padding: 1.8vh;
+    border-radius: 120px;
+    width: 35vw;
+    padding: 2.5vw;
   }
 }
 
 @media (min-width: 700px) {
-  .SMSAuth input {
-    width: 265px;
-    padding: 15px;
-    font-size: 15px;
+  .SMSAuth button {
+    border-radius: 120px;
+    padding: 10px;
+    font-size: 18px;
+    margin: 10px;
+    width: 278px;
   }
-}
 
-@media (min-width: 1500px) {
   .SMSAuth input {
-    width: 540px;
-    padding: 25px;
-    font-size: 40px;
+    width: 240px;
+    padding: 20px;
   }
 }

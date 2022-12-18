@@ -261,8 +261,10 @@ const Home = () => {
   return (
     <>
       <div className={style.apiKeyForm}>
-        <h1>StopUps API Service</h1>
         <span>
+          <div>
+            <h3>사이드 메뉴</h3>
+          </div>
           <button onClick={generatorAPI}>API 키 발급</button>
           <CopyToClipboard text={apiKey}>
             <button onClick={() => alert("클립보드 복사")}>
@@ -271,14 +273,11 @@ const Home = () => {
           </CopyToClipboard>
           <button onClick={logOut}>로그아웃</button>
         </span>
-        <p>30분 후 로그 아웃됩니다.</p>
-        <div>{smsAuth ? null : <SMSAuth />}</div>
-        <div className={style.apiKeySpace}>{apiKey}</div>
         {smsAuth ? (
           <>
-            <h1>관리자 메뉴</h1>
             <div className={style.menubar}>
               <span>
+                <h3>관리자 메뉴</h3>
                 <button onClick={menuView}>메뉴 관리</button>
                 <button onClick={eventView}>이벤트 관리</button>
                 <button onClick={noticeView}>공지 사항 관리</button>
@@ -286,7 +285,13 @@ const Home = () => {
             </div>
           </>
         ) : null}
+        <span>
+          {smsAuth ? null : <SMSAuth />}
+          {smsAuth ? <p>30분 후 로그 아웃됩니다.</p> : null}
+          <div className={style.apiKeySpace}>{apiKey}</div>
+        </span>
       </div>
+
       {/* 모달 사용 */}
       <Modal
         isOpen={modal}
