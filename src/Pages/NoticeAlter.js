@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "../CSS/Home/MenuCreate.module.css";
 
-const NoticeAlter = ({ menu }) => {
+const NoticeAlter = ({ menu, API }) => {
   const [altNotice, setAltNotice] = useState({});
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const NoticeAlter = ({ menu }) => {
     const Num = e.target.Num.value;
     try {
       // 정보 수정후 등록
-      await axios.post(process.env.REACT_APP_API + "/notice/alter", {
+      await axios.post(API + "/notice/alter", {
         Title,
         Desc,
         Id,

@@ -3,6 +3,7 @@ import { useState } from "react"; // 상태 값 저장
 import { useNavigate } from "react-router-dom"; // 페이지 리렌더링 용도
 import { decrypt } from "../Crypto/chiper";
 import style from "../CSS/Home/SMSAuth.module.css";
+const API = process.env.REACT_APP_API;
 
 const SMSAuth = () => {
   const [show, setShow] = useState(false); // 휴대전화 입력 여부 상태 저장
@@ -13,7 +14,7 @@ const SMSAuth = () => {
     // SMS 인증
     e.preventDefault();
     const phone_number = e.target.phone_number.value; // 휴대전화 번호
-    const res = await axios.get(process.env.REACT_APP_API + `/users`);
+    const res = await axios.get(API + `/users`);
     const userInfo = res.data;
 
     userInfo.map(async (user) => {
@@ -22,7 +23,7 @@ const SMSAuth = () => {
         setRnd(rnd_number.toString()); // 인증 번호 문자열로 저장
         if (phone_number !== "") {
           // 값이 존재하면 SMS 인증을 위해 POST로 전달
-          await axios.post(process.env.REACT_APP_API + `/sms/`, {
+          await axios.post(API + `/sms/`, {
             phone_number,
             rnd_number,
           });

@@ -8,13 +8,13 @@ import SMSAuth from "./SMSAuth"; // SMS 인증
 import Modal from "react-modal"; // 메뉴 조회 모달
 import MenuCreate from "./MenuCreate"; // 메뉴 등록
 import MenuAlter from "./MenuAlter"; // 메뉴 수정
-import EventCreate from "./eventCreate";
-import EventAlter from "./eventAlter";
-import NoticeCreate from "./NoticeCreate";
-import NoticeAlter from "./NoticeAlter";
-import MenuExcelDownload from "./MenuExcelDownload";
-import EventExcelDownload from "./eventExcelDownload";
-import NoticeExcelDownload from "./NoticeExcelDownload";
+import EventCreate from "./eventCreate"; // 이벤트 등록
+import EventAlter from "./eventAlter"; // 이벤트 수정
+import NoticeCreate from "./NoticeCreate"; // 공지 등록
+import NoticeAlter from "./NoticeAlter"; // 공지 수정
+import MenuExcelDownload from "./MenuExcelDownload"; // 메뉴 엑셀 다운로드
+import EventExcelDownload from "./eventExcelDownload"; // 이벤트 엑셀 다운로드
+import NoticeExcelDownload from "./NoticeExcelDownload"; // 공지 엑셀 다운로드
 
 const Home = () => {
   const [apiKey, setApiKey] = useState(""); // API 키 값 상태 저장
@@ -34,12 +34,19 @@ const Home = () => {
   const [eventModal, setEventModal] = useState(false); // 이벤트 조회 모달
   const [showEventCreate, setShowEventCreate] = useState(false); // 이벤트 등록 모달 토글
   const [eventList, setEventList] = useState({}); // 이벤트 조회시 이벤트 값 저장
-  const [showEventAlter, setShowEventAlter] = useState(false);
-  const [noticeModal, setNoticeModal] = useState(false);
-  const [noticeCreateModal, setNoticeCreateModal] = useState(false);
-  const [noticeList, setNoticeList] = useState({});
-  const [showWriteAlter, setShowWriteAlter] = useState(false);
-  const [delImageUrl, setDelImageUrl] = useState("");
+  const [showEventAlter, setShowEventAlter] = useState(false); // 이벤트 수정 모달
+  const [noticeModal, setNoticeModal] = useState(false); // 공지 모달
+  const [noticeCreateModal, setNoticeCreateModal] = useState(false); // 공지 등록 모달
+  const [noticeList, setNoticeList] = useState({}); // 공지 조회
+  const [showWriteAlter, setShowWriteAlter] = useState(false); // 공지 수정 모달
+  const [delImageUrl, setDelImageUrl] = useState(""); // 이미지 삭제
+  const API = process.env.REACT_APP_API; // env API 주소
+  const EVENTSEARCHALL = "&Event=ALL&Title=&EventId="; // 이벤트 전체 조회
+  const NOTICESEARCHALL = `&Notice=ALL&Title=&writeId=`; // 공지 전체 조회
+  const MENUSEARCHALL = `&Category=분류&Name=`; // 메뉴 전체조회
+  const MENUSEARCH = `&Category=${category}&Name=${search}`; // 메뉴 선택 조회
+  const EVENTSEARCH = `&Event=ALL&Title=${search}&EventId=`; // 이벤트 선택 조회
+  const NOTICESEARCH = `&Notice=ALL&Title=${search}&writeId=`; // 공지 선택 조회
 
   useEffect(() => {
     // 세션 스토리지에 AuthForm 키의 값이 있으면 상태 변경
@@ -50,16 +57,12 @@ const Home = () => {
   const generatorAPI = async () => {
     if (smsAuth) {
       // SMS 인증이 성공하면 유저 정보 조회
-      const res = await axios.get(process.env.REACT_APP_API + "/users");
+      const res = await axios.get(API + "/users");
       const users = res.data;
       users.find((element) => {
         // DB의 userToken과 세션 스토리지 accessToken과 비교해서 맞으면 API 키 값이 포함된 URL 제공
         if (element.userToken === sessionStorage.getItem("accessToken")) {
-          setApiKey(
-            process.env.REACT_APP_API +
-              "/api/?apikey=" +
-              decrypt(element.userApiKey)
-          );
+          setApiKey(API + "/api/?apikey=" + decrypt(element.userApiKey));
         }
       });
     } else {
@@ -79,22 +82,20 @@ const Home = () => {
 
   const menuView = async () => {
     // 메뉴 조회 시 카테고리 지정 및 검색 값에 따른 DB 조회
-    const menu = await axios.get(
-      apiKey + `&Category=${category}&Name=${search}`
-    );
+    const menu = await axios.get(apiKey + MENUSEARCH);
     setMenuList(menu.data);
     setModal(!modal);
   };
 
   const eventView = async () => {
-    // 이벤트 조회 시 카테고리 지정 및 검색 값에 따른 DB 조회
-    const event = await axios.get(apiKey + `&Event=ALL&Title=&EventId=`);
+    // 이벤트 조회 시 이벤트 제목 또는 ID로 전체 검색
+    const event = await axios.get(apiKey + EVENTSEARCHALL);
     setEventList(event.data);
     setEventModal(!eventModal);
   };
 
   const noticeView = async () => {
-    const notice = await axios.get(apiKey + `&Notice=ALL&Title=&writeId=`);
+    const notice = await axios.get(apiKey + NOTICESEARCHALL);
     setNoticeList(notice.data);
     setNoticeModal(!noticeModal);
   };
@@ -103,9 +104,7 @@ const Home = () => {
     e.preventDefault();
     setSearch(e.target.Search.value);
     setCategory(e.target.Category.value);
-    const menu = await axios.get(
-      apiKey + `&Category=${category}&Name=${search}`
-    );
+    const menu = await axios.get(apiKey + MENUSEARCH);
     setMenuList(menu.data);
   };
 
@@ -113,18 +112,14 @@ const Home = () => {
     // 이벤트 검색 버튼 클릭 시 카테고리 및 검색 값을 설정 후 설정된 값으로 검색
     e.preventDefault();
     setSearch(e.target.Search.value);
-    const event = await axios.get(
-      apiKey + `&Event=ALL&Title=${search}&EventId=`
-    );
+    const event = await axios.get(apiKey + EVENTSEARCH);
     setEventList(event.data);
   };
 
   const noticeSearchForm = async (e) => {
     e.preventDefault();
     setSearch(e.target.Search.value);
-    const notice = await axios.get(
-      apiKey + `&Notice=ALL&Title=${search}&writeId=`
-    );
+    const notice = await axios.get(apiKey + NOTICESEARCH);
     setNoticeList(notice.data);
   };
 
@@ -157,9 +152,7 @@ const Home = () => {
     // 수정 버튼 클릭시 이벤트 아이디 값으로 검색
 
     const EventId = e.target.parentElement.parentElement.children[2].innerText;
-    const res = await axios.get(
-      apiKey + `&Event=ALL&Title=&EventId=${EventId}`
-    );
+    const res = await axios.get(apiKey + EVENTSEARCHALL + `${EventId}`);
     setMenuInfo(res.data); // 수정할 항목을 검색해서 정보 재설정
     setShowEventAlter(!showEventAlter); // 모달창 온오프
   };
@@ -167,11 +160,8 @@ const Home = () => {
   const onClickWriteAlt = async (e) => {
     e.preventDefault();
     // 수정 버튼 클릭시 게시글 아이디 값으로 검색
-
     const WriteId = e.target.parentElement.parentElement.children[1].innerText;
-    const res = await axios.get(
-      apiKey + `&Notice=ALL&Title=&writeId=${WriteId}`
-    );
+    const res = await axios.get(apiKey + NOTICESEARCHALL + `${WriteId}`);
     setMenuInfo(res.data); // 수정할 항목을 검색해서 정보 재설정
     setShowWriteAlter(!showWriteAlter); // 모달창 온오프
   };
@@ -183,16 +173,12 @@ const Home = () => {
       e.target.parentElement.parentElement.children[3].innerText;
     try {
       await axios
-        .post(process.env.REACT_APP_API + "/menu/delete", {
+        .post(API + "/menu/delete", {
           ProductId,
         })
         .then(
           // 삭제가 완료되면 목록 갱신을 위해 전체 조회
-          setMenuList(
-            await (
-              await axios.get(apiKey + `&Category=${category}&Name=${search}`)
-            ).data
-          )
+          setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data)
         );
     } catch (error) {
       console.error(error);
@@ -208,22 +194,20 @@ const Home = () => {
         setDelImageUrl(el.Image);
       }
     });
-    try {
-      await axios
-        .post(process.env.REACT_APP_API + "/event/delete", {
-          EventId,
-          delImageUrl,
-        })
-        .then(
-          // 삭제가 완료되면 목록 갱신을 위해 전체 조회
-          setEventList(
-            await (
-              await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
-            ).data
-          )
-        );
-    } catch (error) {
-      console.error(error);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        await axios
+          .post(API + "/event/delete", {
+            EventId,
+            delImageUrl,
+          })
+          .then(
+            // 삭제가 완료되면 목록 갱신을 위해 전체 조회
+            setEventList(await (await axios.get(apiKey + EVENTSEARCHALL)).data)
+          );
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -234,16 +218,12 @@ const Home = () => {
 
     try {
       await axios
-        .post(process.env.REACT_APP_API + "/notice/delete", {
+        .post(API + "/notice/delete", {
           WriteId,
         })
         .then(
           // 삭제가 완료되면 목록 갱신을 위해 전체 조회
-          setNoticeList(
-            await (
-              await axios.get(apiKey + `&Notice=ALL&Title=&writeId`)
-            ).data
-          )
+          setNoticeList(await (await axios.get(apiKey + NOTICESEARCHALL)).data)
         );
     } catch (error) {
       console.error(error);
@@ -291,7 +271,6 @@ const Home = () => {
           <div className={style.apiKeySpace}>{apiKey}</div>
         </span>
       </div>
-
       {/* 모달 사용 */}
       <Modal
         isOpen={modal}
@@ -326,7 +305,7 @@ const Home = () => {
                 <button onClick={() => setModal(!modal)}>닫기</button>
               </form>
             </div>
-            <MenuExcelDownload apiKey={apiKey} />
+            <MenuExcelDownload apiKey={apiKey} MENUSEARCHALL={MENUSEARCHALL} />
             <div className={style.ItemList}>
               <span>번호</span>
               <span>제품이미지</span>
@@ -367,16 +346,12 @@ const Home = () => {
         className={style.Modal}
       >
         {/* 메뉴 등록 */}
-        <MenuCreate apiKey={apiKey} />
+        <MenuCreate apiKey={apiKey} API={API} MENUSEARCHALL={MENUSEARCHALL} />
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
             setShowMenuCreate(!showMenuCreate);
-            setMenuList(
-              await (
-                await axios.get(apiKey + `&Category=${category}&Name=${search}`)
-              ).data
-            );
+            setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
           }}
         >
           닫기
@@ -387,17 +362,13 @@ const Home = () => {
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
-        <MenuAlter menu={menuInfo} />
+        <MenuAlter menu={menuInfo} API={API} />
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
             setShowMenuAlter(!showMenuAlter);
-            setMenuList(
-              await (
-                await axios.get(apiKey + `&Category=${category}&Name=${search}`)
-              ).data
-            );
+            setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
           }}
         >
           닫기
@@ -419,7 +390,10 @@ const Home = () => {
                 <button onClick={() => setEventModal(!eventModal)}>닫기</button>
               </form>
             </div>
-            <EventExcelDownload apiKey={apiKey} />
+            <EventExcelDownload
+              apiKey={apiKey}
+              EVENTSEARCHALL={EVENTSEARCHALL}
+            />
             <div className={style.ItemList}>
               <span>번호</span>
               <span>이미지</span>
@@ -427,6 +401,7 @@ const Home = () => {
               <span>고유번호</span>
               <span>제목</span>
               <span>기간</span>
+              <span>진행 현황</span>
               <span>수정/삭제</span>
             </div>
           </>
@@ -443,12 +418,7 @@ const Home = () => {
                       {event.Image ? (
                         <>
                           {Object.keys(event.Image).map((e, idx) => {
-                            return (
-                              <img
-                                key={idx}
-                                src={process.env.REACT_APP_API + event.Image[e]}
-                              />
-                            );
+                            return <img key={idx} src={API + event.Image[e]} />;
                           })}
                         </>
                       ) : null}
@@ -457,6 +427,7 @@ const Home = () => {
                     <span>{event.EventId}</span>
                     <span>{event.Title}</span>
                     <span>{event.EventTime}</span>
+                    <span>{event.Proceed}</span>
                     <span>
                       <button onClick={onClickEventAlt}>수정</button>
                       <button onClick={onClickEventDel}>삭제</button>
@@ -475,16 +446,17 @@ const Home = () => {
         className={style.Modal}
       >
         {/* 이벤트 등록 */}
-        <EventCreate valid={eventList} />
+        <EventCreate
+          valid={eventList}
+          API={API}
+          apiKey={apiKey}
+          EVENTSEARCHALL={EVENTSEARCHALL}
+        />
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
             setShowEventCreate(!showEventCreate);
-            setEventList(
-              await (
-                await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
-              ).data
-            );
+            setEventList(await (await axios.get(apiKey + EVENTSEARCHALL)).data);
           }}
         >
           닫기
@@ -495,17 +467,13 @@ const Home = () => {
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
-        <EventAlter menu={menuInfo} />
+        <EventAlter menu={menuInfo} API={API} />
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
             setShowEventAlter(!showEventAlter);
-            setEventList(
-              await (
-                await axios.get(apiKey + `&Event=ALL&Title=&EventId=`)
-              ).data
-            );
+            setEventList(await (await axios.get(apiKey + EVENTSEARCHALL)).data);
           }}
         >
           닫기
@@ -530,7 +498,10 @@ const Home = () => {
                 </button>
               </form>
             </div>
-            <NoticeExcelDownload apiKey={apiKey} />
+            <NoticeExcelDownload
+              apiKey={apiKey}
+              NOTICESEARCHALL={NOTICESEARCHALL}
+            />
             <div className={style.ItemList}>
               <span>번호</span>
               <span>글번호</span>
@@ -573,13 +544,11 @@ const Home = () => {
         className={style.Modal}
       >
         {/* 사이트 공지사항 등록 */}
-        <NoticeCreate valid={noticeList} />
+        <NoticeCreate valid={noticeList} API={API} />
         <button
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
-            const notice = await axios.get(
-              apiKey + `&Notice=ALL&Title=&writeId=`
-            );
+            const notice = await axios.get(apiKey + NOTICESEARCHALL);
             setNoticeList(notice.data);
             setNoticeCreateModal(!noticeCreateModal);
           }}
@@ -592,7 +561,7 @@ const Home = () => {
         appElement={document.getElementById("root") || undefined}
         className={style.Modal}
       >
-        <NoticeAlter menu={menuInfo} />
+        <NoticeAlter menu={menuInfo} API={API} />
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <button
           onClick={async () => {
@@ -600,7 +569,7 @@ const Home = () => {
             setShowWriteAlter(!showWriteAlter);
             setNoticeList(
               await (
-                await axios.get(apiKey + `&Notice=ALL&Title=&writeId=`)
+                await axios.get(apiKey + NOTICESEARCHALL)
               ).data
             );
           }}

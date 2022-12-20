@@ -3,10 +3,10 @@ import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
-const NoticeExcelDownload = ({ apiKey }) => {
+const NoticeExcelDownload = ({ apiKey, NOTICESEARCHALL }) => {
   const [data, setData] = useState({});
   const getAxios = async () => {
-    const res = await axios.get(apiKey + `&Notice=ALL&Title=&writeId=`);
+    const res = await axios.get(apiKey + NOTICESEARCHALL);
     setData(res.data);
   };
   useEffect(() => {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import style from "../CSS/Home/Notice.module.css";
 
-const NoticeCreate = ({ valid }) => {
+const NoticeCreate = ({ valid, API }) => {
   const [time, setTime] = useState("");
   const [message, setMessage] = useState("");
   const date = new Date();
@@ -29,7 +29,7 @@ const NoticeCreate = ({ valid }) => {
     const writeIndex = e.target.글번호.value;
 
     try {
-      await axios.post(process.env.REACT_APP_API + "/notice/create", {
+      await axios.post(API + "/notice/create", {
         writeDate,
         writeTitle,
         writeContent,

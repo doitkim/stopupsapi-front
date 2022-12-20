@@ -3,10 +3,10 @@ import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
-const MenuExcelDownload = ({ apiKey }) => {
+const MenuExcelDownload = ({ apiKey, MENUSEARCHALL }) => {
   const [data, setData] = useState({});
   const getAxios = async () => {
-    const res = await axios.get(apiKey + `&Category=분류&Name=`);
+    const res = await axios.get(apiKey + MENUSEARCHALL);
     setData(res.data);
   };
   useEffect(() => {

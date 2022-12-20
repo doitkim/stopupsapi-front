@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "../CSS/Home/MenuCreate.module.css";
-const MenuAlter = ({ menu }) => {
+const MenuAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
   // value 만 사용할 경우 input 값 수정이 불가
   // 제품 ID는 바뀌면 안되므로 disable 처리
@@ -64,7 +64,7 @@ const MenuAlter = ({ menu }) => {
 
     try {
       // 정보 수정후 등록
-      await axios.post(process.env.REACT_APP_API + "/menu/alter", {
+      await axios.post(API + "/menu/alter", {
         Category,
         ProductId,
         Name,

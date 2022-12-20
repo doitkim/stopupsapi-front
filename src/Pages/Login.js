@@ -41,6 +41,9 @@ const Login = () => {
     e.target.email.value = "";
     e.target.password.value = "";
   };
+  const regex =
+    "^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)-_=+]).{8,16}$";
+
   return (
     <>
       <form onSubmit={loginSubmit} className={style.loginForm}>
@@ -52,14 +55,13 @@ const Login = () => {
           placeholder="email"
           required
         />
-        {/* 비밀번호는 정규표현식을 패턴값으로 적용 html 태그 속성에 보인다는게 단점 */}
         <input
           className={style.loginFormInput}
           type="password"
           name="password"
           placeholder="영문,대소문자,숫자,특수문자 포함 8~16자"
           required
-          pattern="^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$"
+          pattern={regex}
         />
         <button className={style.loginFormButton} type="submit">
           로그인

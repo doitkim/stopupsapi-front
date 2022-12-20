@@ -3,6 +3,7 @@ import style from "../CSS/Register/Register.module.css";
 import { encrypt, decrypt } from "../Crypto/chiper"; // DB에 저장 시 암호화, 조회시 복호화
 import { Link, useNavigate } from "react-router-dom"; // 회원 가입 취소 및 페이지 렌더링 시 사용
 import { useState } from "react"; // 상태 값 저장
+const API = process.env.REACT_APP_API;
 
 const Register = () => {
   const navigate = useNavigate(); // 페이지 렌더링에 이용
@@ -28,7 +29,7 @@ const Register = () => {
     const eUserPhoneNumber = encrypt(phoneNumber);
 
     // DB 계정 정보 조회
-    const res = await axios.get(process.env.REACT_APP_API + "/users");
+    const res = await axios.get(API + "/users");
     const users = res.data;
 
     // 암호화된 DB의 계정 정보와 사용자 계정정보가 같은지 확인
@@ -45,7 +46,7 @@ const Register = () => {
     } else {
       try {
         // POST로 암호화된 회원가입 정보 전달
-        await axios.post(process.env.REACT_APP_API + "/users", {
+        await axios.post(API + "/users", {
           eAccessToken,
           eUserId,
           eUserPw,

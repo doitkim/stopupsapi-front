@@ -1,7 +1,7 @@
 import axios from "axios";
 import style from "../CSS/Home/MenuCreate.module.css";
 
-const MenuCreate = ({ apiKey }) => {
+const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
   const menuCreate = async (e) => {
     // 메뉴 등록
     e.preventDefault();
@@ -32,11 +32,11 @@ const MenuCreate = ({ apiKey }) => {
       Desert: e.target.Desert.value,
     };
 
-    const res = await axios.get(apiKey + `&Category=분류&Name=${Name}`);
+    const res = await axios.get(apiKey + MENUSEARCHALL + `${Name}`);
 
     if (res.data[0] === undefined || res.data[0].Name !== Name) {
       try {
-        await axios.post(process.env.REACT_APP_API + "/menu/create", {
+        await axios.post(API + "/menu/create", {
           Category,
           ProductId,
           Name,

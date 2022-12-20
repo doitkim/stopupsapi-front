@@ -3,10 +3,10 @@ import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
-const EventExcelDownload = ({ apiKey }) => {
+const EventExcelDownload = ({ apiKey, EVENTSEARCHALL }) => {
   const [data, setData] = useState({});
   const getAxios = async () => {
-    const res = await axios.get(apiKey + `&Event=ALL&Title=&EventId=`);
+    const res = await axios.get(apiKey + EVENTSEARCHALL);
     setData(res.data);
   };
   useEffect(() => {
@@ -16,7 +16,7 @@ const EventExcelDownload = ({ apiKey }) => {
   const excelFileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const excelFileExtension = ".xlsx";
-  const excelFileName = "이미지 현황";
+  const excelFileName = "이벤트 현황";
 
   const excelDownload = (excelData) => {
     const ws = XLSX.utils.aoa_to_sheet([
@@ -25,7 +25,6 @@ const EventExcelDownload = ({ apiKey }) => {
     excelData.map((data) => {
       if (data.Image) {
         Object.values(data.Image).map((e) => {
-          console.log(e);
           XLSX.utils.sheet_add_aoa(
             ws,
             [[data.Date, data.EventId, data.Title, data.EventTime, e]],
@@ -34,6 +33,14 @@ const EventExcelDownload = ({ apiKey }) => {
             }
           );
         });
+      } else {
+        XLSX.utils.sheet_add_aoa(
+          ws,
+          [[data.Date, data.EventId, data.Title, data.EventTime]],
+          {
+            origin: -1,
+          }
+        );
       }
       ws["!cols"] = [
         // 행 사이즈
