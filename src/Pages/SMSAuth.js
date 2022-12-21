@@ -10,6 +10,7 @@ const SMSAuth = () => {
   const [rnd, setRnd] = useState(""); // 임의의 비밀번호 4자리 값 저장
   const [authForm, setAuthForm] = useState(false); // 인증 상태 값 저장
   const navigate = useNavigate(); // 페이지 리렌더링 용도
+
   const phoneSubmit = async (e) => {
     // SMS 인증
     e.preventDefault();
@@ -35,16 +36,25 @@ const SMSAuth = () => {
   };
 
   // 모바일 인증
-  const authSubmit = (e) => {
+  const authSubmit = async (e) => {
     e.preventDefault();
+    const res = await axios.get(API + `/adminAuth`);
+    const adminToken = res.data;
     const userAuth = e.target.phone_number.value; // 인증 번호 값 저장
+    const adminAuth = e.target.admin_number.value; // 관리자 인증 번호 값 저장
     e.target.phone_number.value = ""; // 인증 번호 입력 값 초기화
-    if (userAuth === rnd) {
-      // 사용자에게 보낸 임의의 4자리와 사용자가 입력한 4자리가 맞으면 작동
-      setAuthForm(true); // 인증 값 설정
-      sessionStorage.setItem("AuthForm", "success"); // 세션 스토리지에 인증 여부 저장
-      navigate("/"); // 페이지 리렌더링 하기 위한 페이지 이동
-    }
+    e.target.admin_number.value = "";
+
+    adminToken.map((e) => {
+      if (userAuth === rnd) {
+        // 사용자에게 보낸 임의의 4자리와 사용자가 입력한 4자리가 맞으면 작동
+        if (e.adminToken === adminAuth) {
+          setAuthForm(true); // 인증 값 설정
+          sessionStorage.setItem("AuthForm", "success"); // 세션 스토리지에 인증 여부 저장
+          navigate("/"); // 페이지 리렌더링 하기 위한 페이지 이동
+        }
+      }
+    });
     setShow(!show); // 인증 폼 상태값 변경
   };
 
@@ -62,6 +72,11 @@ const SMSAuth = () => {
               <input
                 placeholder="인증 번호 인증"
                 name="phone_number"
+                required
+              />
+              <input
+                placeholder="관리자 번호 인증"
+                name="admin_number"
                 required
               />
               <button>전송</button>
