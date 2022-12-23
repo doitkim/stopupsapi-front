@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react"; // 상태 값 저장
 import { useNavigate } from "react-router-dom"; // 페이지 리렌더링 용도
 import { decrypt } from "../Crypto/chiper";
-import style from "../CSS/Home/SMSAuth.module.css";
+import { Box, Button, TextField } from "@mui/material";
 const API = process.env.REACT_APP_API;
 
 const SMSAuth = () => {
@@ -60,38 +60,102 @@ const SMSAuth = () => {
 
   return (
     <>
-      <h3>휴대폰 인증</h3>
       {/* 인증 여부에 따라 작동 */}
-      {authForm ? (
-        <>{alert("인증 완료")}</>
-      ) : (
-        <>
+      {authForm ? null : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            alignContent: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            mt: 1,
+            p: 1,
+          }}
+        >
           {/* 모달 토글 상태에 따라 작동 */}
           {show ? (
-            <form className={style.SMSAuth} onSubmit={authSubmit}>
-              <input
-                placeholder="인증 번호 인증"
+            <form onSubmit={authSubmit}>
+              <TextField
+                size="small"
                 name="phone_number"
                 required
+                autoFocus
+                fullWidth
+                sx={{
+                  mb: 1,
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiOutlinedInput-root:hover": {
+                    "& > fieldset": {
+                      borderColor: "#1877d5",
+                    },
+                  },
+                }}
+                label="인증 번호 인증"
               />
-              <input
-                placeholder="관리자 번호 인증"
+              <TextField
+                size="small"
                 name="admin_number"
                 required
+                autoFocus
+                fullWidth
+                sx={{
+                  mb: 1,
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiOutlinedInput-root:hover": {
+                    "& > fieldset": {
+                      borderColor: "#1877d5",
+                    },
+                  },
+                }}
+                label="관리자 번호 인증"
               />
-              <button>전송</button>
+              <Button
+                type="submit"
+                sx={{ m: 0.2, border: "solid white 1px", color: "white" }}
+                variant="outlined"
+                fullWidth
+              >
+                전송
+              </Button>
             </form>
           ) : (
-            <form className={style.SMSAuth} onSubmit={phoneSubmit}>
-              <input
-                placeholder="휴대폰 번호 인증"
+            <form onSubmit={phoneSubmit}>
+              <TextField
+                size="small"
                 name="phone_number"
                 required
+                autoFocus
+                fullWidth
+                sx={{
+                  mb: 1,
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiOutlinedInput-root:hover": {
+                    "& > fieldset": {
+                      borderColor: "#1877d5",
+                    },
+                  },
+                }}
+                label="휴대폰 번호 인증"
               />
-              <button>전송</button>
+              <Button
+                type="submit"
+                sx={{ m: 0.2, border: "solid white 1px", color: "white" }}
+                variant="outlined"
+                fullWidth
+              >
+                전송
+              </Button>
             </form>
           )}
-        </>
+        </Box>
       )}
     </>
   );

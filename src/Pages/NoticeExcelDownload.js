@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
@@ -19,11 +20,13 @@ const NoticeExcelDownload = ({ apiKey, NOTICESEARCHALL }) => {
   const excelFileName = "공지 현황";
 
   const excelDownload = (excelData) => {
-    const ws = XLSX.utils.aoa_to_sheet([["Date", "Title", "Desc", "Id"]]);
+    const ws = XLSX.utils.aoa_to_sheet([
+      ["Num", "Date", "Title", "Desc", "Id"],
+    ]);
     excelData.map((data) => {
       XLSX.utils.sheet_add_aoa(
         ws,
-        [[data.Date, data.Title, data.Desc, data.Id]],
+        [[data.Num, data.Date, data.Title, data.Desc, data.Id]],
         {
           origin: -1,
         }
@@ -42,14 +45,13 @@ const NoticeExcelDownload = ({ apiKey, NOTICESEARCHALL }) => {
   };
 
   return (
-    <div>
-      <button onClick={() => excelDownload(data)} style={{ border: 0 }}>
-        <img
-          src="https://w7.pngwing.com/pngs/2/544/png-transparent-microsoft-excel-encapsulated-postscript-computer-icons-exel-angle-text-rectangle.png"
-          width="35px"
-        />
-      </button>
-    </div>
+    <Button
+      sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+      variant="outlined"
+      onClick={() => excelDownload(data)}
+    >
+      엑셀
+    </Button>
   );
 };
 

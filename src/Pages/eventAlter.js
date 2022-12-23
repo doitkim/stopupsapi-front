@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import style from "../CSS/Home/MenuCreate.module.css";
+import { Box, Button, TextField } from "@mui/material";
 
 const EventAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
@@ -53,78 +53,180 @@ const EventAlter = ({ menu, API }) => {
   };
 
   return (
-    <form className={style.menuCreateForm} onSubmit={onSubmit}>
-      <h1>이벤트 수정</h1>
-      <input
-        type="text"
-        name="작성일자"
-        placeholder="작성일자"
-        value={altEvent.Date}
-        onChange={onChange}
-        disabled
-      />
-      <input
-        type="text"
-        name="Id"
-        placeholder="고유번호 (필수)"
-        value={altEvent.EventId}
-        onChange={onChange}
-        disabled
-      />
-      <input
-        type="text"
-        name="Title"
-        placeholder="제목 (필수)"
-        value={altEvent.Title}
-        onChange={onChange}
-        required
-      />
-      <input
-        type="text"
-        name="EventTime"
-        placeholder="기간"
-        value={altEvent.EventTime}
-        onChange={onChange}
-        required
-      />
-      {menu[0].Image ? (
-        <>
-          {Object.values(menu[0].Image).map((e, idx) => {
-            return <img src={API + e} key={idx} width={150} />;
-          })}
-        </>
-      ) : null}
-
-      <input
-        type="file"
-        name="ImgFile"
-        accept="image/*"
-        placeholder="이벤트파일"
-        multiple
-      />
-      <span>
-        {proceed === "진행중" ? (
-          <button
-            onClick={proceedState}
-            style={{ backgroundColor: "#1e3932", color: "white" }}
-          >
-            진행중
-          </button>
-        ) : (
-          <button onClick={proceedState}>진행중</button>
-        )}
-        {proceed === "종료" ? (
-          <button
-            onClick={endProceedState}
-            style={{ backgroundColor: "#1e3932", color: "white" }}
-          >
-            종료
-          </button>
-        ) : (
-          <button onClick={endProceedState}>종료</button>
-        )}
-      </span>
-      <button>등록</button>
+    <form
+      onSubmit={onSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 10,
+        backgroundColor: "#b5e4fb",
+      }}
+    >
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h1>이벤트 수정</h1>
+        </Box>
+        <TextField
+          size="small"
+          name="작성일자"
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="작성일자"
+          value={altEvent.Date}
+          onChange={onChange}
+          disabled
+        />
+        <TextField
+          size="small"
+          name="Id"
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="고유번호"
+          value={altEvent.EventId}
+          onChange={onChange}
+          disabled
+        />
+        <TextField
+          size="small"
+          name="Title"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제목"
+          value={altEvent.Title}
+          onChange={onChange}
+          required
+        />
+        <TextField
+          size="small"
+          name="EventTime"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="기간"
+          value={altEvent.EventTime}
+          onChange={onChange}
+          required
+        />
+        <Box
+          sx={{
+            p: 1,
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignContent: "center",
+            justifyContent: "flexStart",
+          }}
+        >
+          {menu[0].Image ? (
+            <>
+              {Object.values(menu[0].Image).map((e, idx) => {
+                return <img src={API + e} key={idx} width={150} />;
+              })}
+            </>
+          ) : null}
+        </Box>
+        <input
+          type="file"
+          name="ImgFile"
+          accept="image/*"
+          placeholder="이벤트파일"
+          multiple
+        />
+        <span>
+          {proceed === "진행중" ? (
+            <Button
+              onClick={proceedState}
+              sx={{
+                m: 1,
+                color: "white",
+                bgcolor: "#1877d5",
+              }}
+            >
+              진행중
+            </Button>
+          ) : (
+            <Button
+              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              variant="outlined"
+              onClick={proceedState}
+            >
+              진행중
+            </Button>
+          )}
+          {proceed === "종료" ? (
+            <Button
+              onClick={endProceedState}
+              sx={{
+                m: 1,
+                color: "white",
+                bgcolor: "#1877d5",
+              }}
+            >
+              종료
+            </Button>
+          ) : (
+            <Button
+              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              variant="outlined"
+              onClick={endProceedState}
+            >
+              종료
+            </Button>
+          )}
+        </span>
+        <Button
+          type="submit"
+          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+          variant="outlined"
+        >
+          등록
+        </Button>
+      </Box>
     </form>
   );
 };

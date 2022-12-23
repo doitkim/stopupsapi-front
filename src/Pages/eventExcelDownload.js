@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import * as FileSaver from "file-saver";
 import { useEffect, useState } from "react";
@@ -27,7 +28,16 @@ const EventExcelDownload = ({ apiKey, EVENTSEARCHALL }) => {
         Object.values(data.Image).map((e) => {
           XLSX.utils.sheet_add_aoa(
             ws,
-            [[data.Date, data.EventId, data.Title, data.EventTime, e]],
+            [
+              [
+                data.Date,
+                data.EventId,
+                data.Title,
+                data.EventTime,
+                data.Proceed,
+                e,
+              ],
+            ],
             {
               origin: -1,
             }
@@ -36,7 +46,7 @@ const EventExcelDownload = ({ apiKey, EVENTSEARCHALL }) => {
       } else {
         XLSX.utils.sheet_add_aoa(
           ws,
-          [[data.Date, data.EventId, data.Title, data.EventTime]],
+          [[data.Date, data.EventId, data.Title, data.EventTime, data.Proceed]],
           {
             origin: -1,
           }
@@ -56,14 +66,13 @@ const EventExcelDownload = ({ apiKey, EVENTSEARCHALL }) => {
   };
 
   return (
-    <div>
-      <button onClick={() => excelDownload(data)} style={{ border: 0 }}>
-        <img
-          src="https://w7.pngwing.com/pngs/2/544/png-transparent-microsoft-excel-encapsulated-postscript-computer-icons-exel-angle-text-rectangle.png"
-          width="35px"
-        />
-      </button>
-    </div>
+    <Button
+      sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+      variant="outlined"
+      onClick={() => excelDownload(data)}
+    >
+      엑셀
+    </Button>
   );
 };
 

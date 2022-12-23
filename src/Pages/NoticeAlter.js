@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import style from "../CSS/Home/MenuCreate.module.css";
+import { Box, Button, TextField } from "@mui/material";
 
 const NoticeAlter = ({ menu, API }) => {
   const [altNotice, setAltNotice] = useState({});
@@ -39,49 +39,133 @@ const NoticeAlter = ({ menu, API }) => {
   };
 
   return (
-    <form className={style.menuCreateForm} onSubmit={onSubmit}>
-      <h1>공지 수정</h1>
-      <input
-        type="text"
-        name="Num"
-        placeholder="글번호"
-        required
-        value={altNotice.Num}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Id"
-        placeholder="게시글Id"
-        required
-        value={altNotice.Id}
-        onChange={onChange}
-        disabled
-      />
-      <input
-        type="text"
-        name="Title"
-        placeholder="제목 (필수)"
-        value={altNotice.Title}
-        onChange={onChange}
-        required
-      />
-      <textarea
-        name="Desc"
-        placeholder="내용 (필수)"
-        required
-        value={altNotice.Desc}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Date"
-        placeholder="작성 일자"
-        value={altNotice.Date}
-        onChange={onChange}
-        disabled
-      />
-      <button>등록</button>
+    <form
+      onSubmit={onSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 10,
+        backgroundColor: "#b5e4fb",
+      }}
+    >
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h1>공지 수정</h1>
+        </Box>
+        <TextField
+          size="small"
+          name="Num"
+          required
+          value={altNotice.Num}
+          onChange={onChange}
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="글번호"
+        />
+        <TextField
+          size="small"
+          name="Id"
+          required
+          value={altNotice.Id}
+          onChange={onChange}
+          disabled
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="게시글Id"
+        />
+        <TextField
+          size="small"
+          name="Title"
+          value={altNotice.Title}
+          onChange={onChange}
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제목"
+        />
+        <TextField
+          size="small"
+          name="Desc"
+          required
+          value={altNotice.Desc}
+          onChange={onChange}
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="내용"
+        />
+        <TextField
+          size="small"
+          name="Date"
+          placeholder="작성 일자"
+          value={altNotice.Date}
+          onChange={onChange}
+          disabled
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="작성 일자"
+        />
+        <Button
+          type="submit"
+          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+          variant="outlined"
+        >
+          등록
+        </Button>
+      </Box>
     </form>
   );
 };

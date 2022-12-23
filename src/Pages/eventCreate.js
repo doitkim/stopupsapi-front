@@ -1,6 +1,6 @@
+import { Box, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import style from "../CSS/Home/MenuCreate.module.css";
 
 const EventCreate = ({ valid, API }) => {
   const [time, setTime] = useState("");
@@ -51,60 +51,171 @@ const EventCreate = ({ valid, API }) => {
   };
 
   return (
-    <form onSubmit={eventCreate} className={style.menuCreateForm}>
-      <h1>이벤트 등록</h1>
-      <input
-        type="text"
-        name="작성일자"
-        placeholder="작성일자"
-        value={dateString}
-        onChange={onChange}
-        disabled
-      />
-      <input
-        type="text"
-        name="Id"
-        placeholder="이벤트 고유번호 (필수)"
-        required
-      />
-      <input
-        type="text"
-        name="Title"
-        placeholder="이벤트 제목 (필수)"
-        required
-      />
-      <input type="text" name="EventTime" placeholder="이벤트 기간" required />
-      <input
-        type="file"
-        name="ImgFile"
-        accept="image/*"
-        placeholder="이벤트파일"
-        multiple
-      />
-      <span>
-        {proceed === "진행중" ? (
-          <button
-            onClick={proceedState}
-            style={{ backgroundColor: "#1e3932", color: "white" }}
-          >
-            진행중
-          </button>
-        ) : (
-          <button onClick={proceedState}>진행중</button>
-        )}
-        {proceed === "종료" ? (
-          <button
-            onClick={endProceedState}
-            style={{ backgroundColor: "#1e3932", color: "white" }}
-          >
-            종료
-          </button>
-        ) : (
-          <button onClick={endProceedState}>종료</button>
-        )}
-      </span>
-      <button>등록</button>
-      {message}
+    <form
+      onSubmit={eventCreate}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 10,
+        backgroundColor: "#b5e4fb",
+      }}
+    >
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h1>이벤트 등록</h1>
+        </Box>
+        <TextField
+          name="작성일자"
+          value={dateString}
+          onChange={onChange}
+          required
+          disabled
+          size="small"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="작성일자"
+        />
+        <TextField
+          name="Id"
+          required
+          size="small"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="고유번호"
+        />
+        <TextField
+          name="Title"
+          required
+          size="small"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제목"
+        />
+        <TextField
+          name="EventTime"
+          placeholder="이벤트 기간"
+          required
+          size="small"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="이벤트 기간"
+        />
+        <input
+          type="file"
+          name="ImgFile"
+          accept="image/*"
+          multiple
+          size="small"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+        />
+        <span>
+          {proceed === "진행중" ? (
+            <Button
+              onClick={proceedState}
+              sx={{
+                m: 1,
+                color: "white",
+                bgcolor: "#1877d5",
+              }}
+            >
+              진행중
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              variant="outlined"
+              onClick={proceedState}
+            >
+              진행중
+            </Button>
+          )}
+          {proceed === "종료" ? (
+            <Button
+              onClick={endProceedState}
+              sx={{
+                m: 1,
+                color: "white",
+                bgcolor: "#1877d5",
+              }}
+            >
+              종료
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              variant="outlined"
+              onClick={endProceedState}
+            >
+              종료
+            </Button>
+          )}
+        </span>
+        <Button
+          type="submit"
+          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+          variant="outlined"
+        >
+          등록
+        </Button>
+        {message}
+      </Box>
     </form>
   );
 };

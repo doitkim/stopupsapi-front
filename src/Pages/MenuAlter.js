@@ -1,11 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import style from "../CSS/Home/MenuCreate.module.css";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 const MenuAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
   // value 만 사용할 경우 input 값 수정이 불가
   // 제품 ID는 바뀌면 안되므로 disable 처리
   const [altMenu, setAltMenu] = useState({});
+  const [drinkChecked, setDrinkChecked] = useState([true, false]);
+  const [eatChecked, setEatChecked] = useState([true, false]);
+  const [cookChecked, setCookChecked] = useState([true, false]);
 
   useEffect(() => {
     setAltMenu({
@@ -29,8 +38,134 @@ const MenuAlter = ({ menu, API }) => {
       Grande: menu[0].Price.Grande,
       Venti: menu[0].Price.Venti,
       Desert: menu[0].Price.Desert,
+      Hot: menu[0].DrinkType["HOT"],
+      Iced: menu[0].DrinkType["ICED"],
+      TakeOut: menu[0].EatType["TAKEOUT"],
+      Shop: menu[0].EatType["SHOP"],
+      Cooked: menu[0].CookType["COOKED"],
+      NotCooked: menu[0].CookType["NOTCOOKED"],
     });
   }, []);
+
+  const DrinkhandleChange1 = (event) => {
+    setDrinkChecked([event.target.checked, event.target.checked]);
+  };
+
+  const DrinkhandleChange2 = (event) => {
+    setDrinkChecked([event.target.checked, drinkChecked[1]]);
+  };
+
+  const DrinkhandleChange3 = (event) => {
+    setDrinkChecked([drinkChecked[0], event.target.checked]);
+  };
+
+  const EathandleChange1 = (event) => {
+    setEatChecked([event.target.checked, event.target.checked]);
+  };
+
+  const EathandleChange2 = (event) => {
+    setEatChecked([event.target.checked, eatChecked[1]]);
+  };
+
+  const EathandleChange3 = (event) => {
+    setEatChecked([eatChecked[0], event.target.checked]);
+  };
+
+  const CookhandleChange1 = (event) => {
+    setCookChecked([event.target.checked, event.target.checked]);
+  };
+
+  const CookhandleChange2 = (event) => {
+    setCookChecked([event.target.checked, cookChecked[1]]);
+  };
+
+  const CookhandleChange3 = (event) => {
+    setCookChecked([cookChecked[0], event.target.checked]);
+  };
+
+  useEffect(() => {
+    if (altMenu.Hot !== undefined) {
+      setDrinkChecked([altMenu.Hot, altMenu.Iced]);
+      setEatChecked([altMenu.TakeOut, altMenu.Shop]);
+      setCookChecked([altMenu.Cooked, altMenu.NotCooked]);
+    }
+  }, [altMenu]);
+
+  const DrinkTypeCheck = (
+    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+      <FormControlLabel
+        label="HOT"
+        control={
+          <Checkbox
+            checked={drinkChecked[0]}
+            onChange={DrinkhandleChange2}
+            name="HOT"
+          />
+        }
+      />
+      <FormControlLabel
+        label="ICED"
+        control={
+          <Checkbox
+            checked={drinkChecked[1]}
+            onChange={DrinkhandleChange3}
+            name="ICED"
+          />
+        }
+      />
+    </Box>
+  );
+
+  const EatTypeCheck = (
+    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+      <FormControlLabel
+        label="TAKE OUT"
+        control={
+          <Checkbox
+            checked={eatChecked[0]}
+            onChange={EathandleChange2}
+            name="TAKEOUT"
+          />
+        }
+      />
+      <FormControlLabel
+        label="SHOP"
+        control={
+          <Checkbox
+            checked={eatChecked[1]}
+            onChange={EathandleChange3}
+            name="SHOP"
+          />
+        }
+      />
+    </Box>
+  );
+
+  const CookTypeCheck = (
+    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+      <FormControlLabel
+        label="COOKED"
+        control={
+          <Checkbox
+            checked={cookChecked[0]}
+            onChange={CookhandleChange2}
+            name="COOKED"
+          />
+        }
+      />
+      <FormControlLabel
+        label="NOT COOKED"
+        control={
+          <Checkbox
+            checked={cookChecked[1]}
+            onChange={CookhandleChange3}
+            name="NOTCOOKED"
+          />
+        }
+      />
+    </Box>
+  );
+
   const onChange = (e) => {
     setAltMenu(e.target.value);
   };
@@ -61,6 +196,27 @@ const MenuAlter = ({ menu, API }) => {
       Venti: e.target.Venti.value,
       Desert: e.target.Desert.value,
     };
+    const DrinkType = {
+      HOT: e.target.children.옵션.children[0].children[1].children[0]
+        .children[0].children.HOT.checked,
+      ICED: e.target.children.옵션.children[0].children[1].children[1]
+        .children[0].children.ICED.checked,
+    };
+    const EatType = {
+      TAKEOUT:
+        e.target.children.옵션.children[1].children[1].children[0].children[0]
+          .children.TAKEOUT.checked,
+      SHOP: e.target.children.옵션.children[1].children[1].children[1]
+        .children[0].children.SHOP.checked,
+    };
+    const CookType = {
+      COOKED:
+        e.target.children.옵션.children[2].children[1].children[0].children[0]
+          .children.COOKED.checked,
+      NOTCOOKED:
+        e.target.children.옵션.children[2].children[1].children[1].children[0]
+          .children.NOTCOOKED.checked,
+    };
 
     try {
       // 정보 수정후 등록
@@ -72,6 +228,9 @@ const MenuAlter = ({ menu, API }) => {
         Desc,
         Nutrient,
         Price,
+        DrinkType,
+        EatType,
+        CookType,
       });
     } catch (error) {
       console.error(error);
@@ -81,156 +240,478 @@ const MenuAlter = ({ menu, API }) => {
   };
 
   return (
-    <form className={style.menuCreateForm} onSubmit={onSubmit}>
-      <h1>제품 수정</h1>
-      <input
-        type="text"
-        name="Category"
-        placeholder="카테고리 (필수)"
-        value={altMenu.Category}
-        onChange={onChange}
-        required
-      />
-      <input
-        type="text"
-        name="ProductId"
-        placeholder="제품번호 (필수)"
-        value={altMenu.ProductId}
-        onChange={onChange}
-        disabled
-        required
-      />
-      <input
-        type="text"
-        name="Name"
-        placeholder="제품 이름 (필수)"
-        required
-        value={altMenu.Name}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Image"
-        placeholder="제품 이미지"
-        value={altMenu.Image}
-        onChange={onChange}
-      />
-      <input
-        type="textarea"
-        name="Desc"
-        placeholder="제품 설명"
-        value={altMenu.Desc}
-        onChange={onChange}
-      />
-      <h2>제품 영양 성분</h2>
-      <input
-        type="text"
-        name="kcal"
-        placeholder="칼로리"
-        value={altMenu.Kcal}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Carbohydrate"
-        placeholder="탄수화물"
-        value={altMenu.Carbohydrate}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Sugar"
-        placeholder="당"
-        value={altMenu.Sugar}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Na"
-        placeholder="나트륨"
-        value={altMenu.Na}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Protein"
-        placeholder="단백질"
-        value={altMenu.Protein}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Fat"
-        placeholder="지방"
-        value={altMenu.Fat}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Cholesterol"
-        placeholder="콜레스테롤"
-        value={altMenu.Cholesterol}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="TransFat"
-        placeholder="트렌스지방"
-        value={altMenu.TransFat}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Caffeine"
-        placeholder="카페인"
-        value={altMenu.Caffeine}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="SaturatedFat"
-        placeholder="포화지방"
-        value={altMenu.SaturatedFat}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="DefaultSize"
-        placeholder="기준 사이즈"
-        value={altMenu.DefaultSize}
-        onChange={onChange}
-      />
-      <h2>제품 사이즈 별 가격</h2>
-      <input
-        type="text"
-        name="Tall"
-        placeholder="Tall"
-        value={altMenu.Tall}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Grande"
-        placeholder="Grande"
-        value={altMenu.Grande}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        name="Venti"
-        placeholder="Venti"
-        value={altMenu.Venti}
-        onChange={onChange}
-      />
-      <h2>제품 가격 (디저트)</h2>
-      <input
-        type="text"
-        name="Desert"
-        placeholder="Desert"
-        value={altMenu.Desert}
-        onChange={onChange}
-      />
-      <button>등록</button>
+    <form
+      onSubmit={onSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 10,
+        backgroundColor: "#b5e4fb",
+      }}
+    >
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h1>제품 수정</h1>
+        </Box>
+        <TextField
+          size="small"
+          name="Category"
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="카테고리"
+          onChange={onChange}
+          value={altMenu.Category}
+        />
+        <TextField
+          size="small"
+          name="ProductId"
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제품번호"
+          onChange={onChange}
+          value={altMenu.ProductId}
+          disabled
+        />
+        <TextField
+          size="small"
+          name="Name"
+          required
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제품 이름"
+          onChange={onChange}
+          value={altMenu.Name}
+        />
+        <TextField
+          size="small"
+          name="Image"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제품 이미지"
+          onChange={onChange}
+          value={altMenu.Image}
+        />
+        <TextField
+          size="small"
+          name="Desc"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="제품 설명"
+          onChange={onChange}
+          value={altMenu.Desc}
+        />
+      </Box>
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h2>제품 영양 성분</h2>
+        </Box>
+        <TextField
+          size="small"
+          name="kcal"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="칼로리"
+          onChange={onChange}
+          value={altMenu.Kcal}
+        />
+        <TextField
+          size="small"
+          name="Carbohydrate"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="탄수화물"
+          onChange={onChange}
+          value={altMenu.Carbohydrate}
+        />
+        <TextField
+          size="small"
+          name="Sugar"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="당류"
+          onChange={onChange}
+          value={altMenu.Sugar}
+        />
+        <TextField
+          size="small"
+          name="Na"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="나트륨"
+          onChange={onChange}
+          value={altMenu.Na}
+        />
+        <TextField
+          size="small"
+          name="Protein"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="단백질"
+          onChange={onChange}
+          value={altMenu.Protein}
+        />
+        <TextField
+          size="small"
+          name="Fat"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="지방"
+          onChange={onChange}
+          value={altMenu.Fat}
+        />
+        <TextField
+          size="small"
+          name="Cholesterol"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="콜레스테롤"
+          onChange={onChange}
+          value={altMenu.Cholesterol}
+        />
+        <TextField
+          size="small"
+          name="TransFat"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="트렌스지방"
+          onChange={onChange}
+          value={altMenu.TransFat}
+        />
+        <TextField
+          size="small"
+          name="Caffeine"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="카페인"
+          onChange={onChange}
+          value={altMenu.Caffeine}
+        />
+        <TextField
+          size="small"
+          name="SaturatedFat"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="포화지방"
+          onChange={onChange}
+          value={altMenu.SaturatedFat}
+        />
+        <TextField
+          size="small"
+          name="DefaultSize"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="기준 사이즈"
+          onChange={onChange}
+          value={altMenu.DefaultSize}
+        />
+      </Box>
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h2>제품 사이즈 별 가격 (음료)</h2>
+        </Box>
+        <TextField
+          size="small"
+          name="Tall"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="Tall"
+          onChange={onChange}
+          value={altMenu.Tall}
+        />
+        <TextField
+          size="small"
+          name="Grande"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="Grade"
+          onChange={onChange}
+          value={altMenu.Grande}
+        />
+        <TextField
+          size="small"
+          name="Venti"
+          placeholder="Venti"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="Venti"
+          onChange={onChange}
+          value={altMenu.Venti}
+        />
+      </Box>
+
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h2>제품 가격 (디저트)</h2>
+        </Box>
+        <TextField
+          size="small"
+          name="Desert"
+          autoFocus
+          sx={{
+            m: 1,
+            "& .MuiOutlinedInput-root": {
+              "& > fieldset": { borderColor: "#316ca4" },
+            },
+            "& .MuiOutlinedInput-root:hover": {
+              "& > fieldset": {
+                borderColor: "#1877d5",
+              },
+            },
+          }}
+          label="Desert"
+          onChange={onChange}
+          value={altMenu.Desert}
+        />
+      </Box>
+      <Box sx={{ color: "#5498d8" }}>
+        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+          <h2>옵션</h2>
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex" }} name="옵션">
+        <Box sx={{ p: 1 }}>
+          <FormControlLabel
+            label="음료 타입"
+            control={
+              <Checkbox
+                checked={drinkChecked[0] && drinkChecked[1]}
+                indeterminate={drinkChecked[0] !== drinkChecked[1]}
+                onChange={DrinkhandleChange1}
+              />
+            }
+          />
+          {DrinkTypeCheck}
+        </Box>
+        <Box sx={{ p: 1 }}>
+          <FormControlLabel
+            label="취식 타입"
+            control={
+              <Checkbox
+                checked={eatChecked[0] && eatChecked[1]}
+                indeterminate={eatChecked[0] !== eatChecked[1]}
+                onChange={EathandleChange1}
+              />
+            }
+          />
+          {EatTypeCheck}
+        </Box>
+        <Box sx={{ p: 1 }}>
+          <FormControlLabel
+            label="요리 타입"
+            control={
+              <Checkbox
+                checked={cookChecked[0] && cookChecked[1]}
+                indeterminate={cookChecked[0] !== cookChecked[1]}
+                onChange={CookhandleChange1}
+              />
+            }
+          />
+          {CookTypeCheck}
+        </Box>
+      </Box>
+      <Button
+        type="submit"
+        sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+        variant="outlined"
+      >
+        등록
+      </Button>
     </form>
   );
 };

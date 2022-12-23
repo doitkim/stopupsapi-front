@@ -1,9 +1,18 @@
-import style from "../CSS/Header/Header.module.css";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 export const Header = () => {
   return (
-    <div className={style.LoginHeader}>
-      <h1>스탑없으 API 서비스</h1>
-    </div>
+    <Box sx={{ flexGrow: 1, minWidth: 800 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            StopUpsAPI
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
