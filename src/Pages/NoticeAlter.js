@@ -38,22 +38,29 @@ const NoticeAlter = ({ menu, API }) => {
     }
   };
 
+  const NOTICEALTER = {
+    padding: 10,
+    backgroundColor: "#b5e4fb",
+    width: 800,
+    minWidth: 780,
+  };
+
+  const TEXTFEILD = {
+    m: 1,
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": { borderColor: "#316ca4" },
+    },
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#1877d5",
+      },
+    },
+  };
+  const ENROLL = { m: 1, color: "#5498d8", borderColor: "#1877d5" };
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        alignContent: "center",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 10,
-        backgroundColor: "#b5e4fb",
-      }}
-    >
+    <form onSubmit={onSubmit} style={NOTICEALTER}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h1>공지 수정</h1>
         </Box>
         <TextField
@@ -63,17 +70,7 @@ const NoticeAlter = ({ menu, API }) => {
           value={altNotice.Num}
           onChange={onChange}
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="글번호"
         />
         <TextField
@@ -84,17 +81,7 @@ const NoticeAlter = ({ menu, API }) => {
           onChange={onChange}
           disabled
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="게시글Id"
         />
         <TextField
@@ -104,17 +91,7 @@ const NoticeAlter = ({ menu, API }) => {
           onChange={onChange}
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제목"
         />
         <TextField
@@ -124,17 +101,7 @@ const NoticeAlter = ({ menu, API }) => {
           value={altNotice.Desc}
           onChange={onChange}
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="내용"
         />
         <TextField
@@ -145,24 +112,10 @@ const NoticeAlter = ({ menu, API }) => {
           onChange={onChange}
           disabled
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="작성 일자"
         />
-        <Button
-          type="submit"
-          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-          variant="outlined"
-        >
+        <Button type="submit" sx={ENROLL} variant="outlined">
           등록
         </Button>
       </Box>

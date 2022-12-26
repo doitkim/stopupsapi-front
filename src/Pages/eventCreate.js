@@ -39,6 +39,20 @@ const EventCreate = ({ valid, API }) => {
       console.error(error);
     }
   };
+  const CREATEFORM = { width: 800, padding: 10, backgroundColor: "#b5e4fb" };
+  const TEXTFIELD = {
+    m: 1,
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": { borderColor: "#316ca4" },
+    },
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#1877d5",
+      },
+    },
+  };
+  const PRCEED = { m: 1, color: "white", bgcolor: "#1877d5" };
+  const END = { m: 1, color: "#5498d8", borderColor: "#1877d5" };
 
   const proceedState = (e) => {
     e.preventDefault();
@@ -51,21 +65,9 @@ const EventCreate = ({ valid, API }) => {
   };
 
   return (
-    <form
-      onSubmit={eventCreate}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        alignContent: "center",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 10,
-        backgroundColor: "#b5e4fb",
-      }}
-    >
+    <form onSubmit={eventCreate} style={CREATEFORM}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h1>이벤트 등록</h1>
         </Box>
         <TextField
@@ -76,17 +78,7 @@ const EventCreate = ({ valid, API }) => {
           disabled
           size="small"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="작성일자"
         />
         <TextField
@@ -94,17 +86,7 @@ const EventCreate = ({ valid, API }) => {
           required
           size="small"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="고유번호"
         />
         <TextField
@@ -112,17 +94,7 @@ const EventCreate = ({ valid, API }) => {
           required
           size="small"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="제목"
         />
         <TextField
@@ -131,17 +103,7 @@ const EventCreate = ({ valid, API }) => {
           required
           size="small"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="이벤트 기간"
         />
         <input
@@ -151,34 +113,17 @@ const EventCreate = ({ valid, API }) => {
           multiple
           size="small"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
         />
         <span>
           {proceed === "진행중" ? (
-            <Button
-              onClick={proceedState}
-              sx={{
-                m: 1,
-                color: "white",
-                bgcolor: "#1877d5",
-              }}
-            >
+            <Button onClick={proceedState} sx={PRCEED}>
               진행중
             </Button>
           ) : (
             <Button
               type="submit"
-              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              sx={END}
               variant="outlined"
               onClick={proceedState}
             >
@@ -186,20 +131,13 @@ const EventCreate = ({ valid, API }) => {
             </Button>
           )}
           {proceed === "종료" ? (
-            <Button
-              onClick={endProceedState}
-              sx={{
-                m: 1,
-                color: "white",
-                bgcolor: "#1877d5",
-              }}
-            >
+            <Button onClick={endProceedState} sx={PRCEED}>
               종료
             </Button>
           ) : (
             <Button
               type="submit"
-              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
+              sx={END}
               variant="outlined"
               onClick={endProceedState}
             >
@@ -207,11 +145,7 @@ const EventCreate = ({ valid, API }) => {
             </Button>
           )}
         </span>
-        <Button
-          type="submit"
-          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-          variant="outlined"
-        >
+        <Button type="submit" sx={END} variant="outlined">
           등록
         </Button>
         {message}

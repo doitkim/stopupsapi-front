@@ -1,13 +1,45 @@
-.Modal {
-  margin-top: 20vh;
+.WRAP {
   display: flex;
-  width: 51vw;
-  height: 40vh;
-  flex-direction: column;
   flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  min-width: 800px;
+}
+
+.SearchForm {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  min-width: 800px;
+}
+
+.Modal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-content: center;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
   align-items: flex-end;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  min-width: 800px;
+  width: 80vw;
+  overflow-y: auto;
+}
+
+.mainMenuWrap {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 3;
 }

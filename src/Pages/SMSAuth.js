@@ -58,22 +58,37 @@ const SMSAuth = () => {
     setShow(!show); // 인증 폼 상태값 변경
   };
 
+  const SMSAUTHFORM = {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "nowrap",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    mt: 1,
+    p: 1,
+  };
+  const TEXTFEILD = {
+    mb: 1,
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": { borderColor: "white" },
+    },
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#1877d5",
+      },
+    },
+  };
+  const ENROLL = {
+    m: 0.2,
+    border: "solid white 1px",
+    color: "white",
+  };
   return (
     <>
       {/* 인증 여부에 따라 작동 */}
       {authForm ? null : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            alignContent: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            mt: 1,
-            p: 1,
-          }}
-        >
+        <Box sx={SMSAUTHFORM}>
           {/* 모달 토글 상태에 따라 작동 */}
           {show ? (
             <form onSubmit={authSubmit}>
@@ -83,17 +98,7 @@ const SMSAuth = () => {
                 required
                 autoFocus
                 fullWidth
-                sx={{
-                  mb: 1,
-                  "& .MuiOutlinedInput-root": {
-                    "& > fieldset": { borderColor: "white" },
-                  },
-                  "& .MuiOutlinedInput-root:hover": {
-                    "& > fieldset": {
-                      borderColor: "#1877d5",
-                    },
-                  },
-                }}
+                sx={TEXTFEILD}
                 label="인증 번호 인증"
               />
               <TextField
@@ -102,17 +107,7 @@ const SMSAuth = () => {
                 required
                 autoFocus
                 fullWidth
-                sx={{
-                  mb: 1,
-                  "& .MuiOutlinedInput-root": {
-                    "& > fieldset": { borderColor: "white" },
-                  },
-                  "& .MuiOutlinedInput-root:hover": {
-                    "& > fieldset": {
-                      borderColor: "#1877d5",
-                    },
-                  },
-                }}
+                sx={TEXTFEILD}
                 label="관리자 번호 인증"
               />
               <Button
@@ -145,12 +140,7 @@ const SMSAuth = () => {
                 }}
                 label="휴대폰 번호 인증"
               />
-              <Button
-                type="submit"
-                sx={{ m: 0.2, border: "solid white 1px", color: "white" }}
-                variant="outlined"
-                fullWidth
-              >
+              <Button type="submit" sx={ENROLL} variant="outlined" fullWidth>
                 전송
               </Button>
             </form>

@@ -2,6 +2,30 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 
+const Title = { color: "#5498d8", bgcolor: "#316ca4" };
+const TEXTFEILD = {
+  m: 1,
+  "& .MuiOutlinedInput-root": {
+    "& > fieldset": { borderColor: "#316ca4" },
+  },
+  "& .MuiOutlinedInput-root:hover": {
+    "& > fieldset": {
+      borderColor: "#1877d5",
+    },
+  },
+};
+const IMG = {
+  p: 1,
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignContent: "center",
+  justifyContent: "flexStart",
+};
+const PROCEED = { m: 1, color: "white", bgcolor: "#1877d5" };
+const END = { m: 1, color: "#5498d8", borderColor: "#1877d5" };
+const ALTERFORM = { width: 800, padding: 10, backgroundColor: "#b5e4fb" };
+
 const EventAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
   // value 만 사용할 경우 input 값 수정이 불가
@@ -53,21 +77,9 @@ const EventAlter = ({ menu, API }) => {
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        alignContent: "center",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 10,
-        backgroundColor: "#b5e4fb",
-      }}
-    >
-      <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+    <form onSubmit={onSubmit} style={ALTERFORM}>
+      <Box>
+        <Box sx={Title}>
           <h1>이벤트 수정</h1>
         </Box>
         <TextField
@@ -75,17 +87,7 @@ const EventAlter = ({ menu, API }) => {
           name="작성일자"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="작성일자"
           value={altEvent.Date}
           onChange={onChange}
@@ -96,17 +98,7 @@ const EventAlter = ({ menu, API }) => {
           name="Id"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="고유번호"
           value={altEvent.EventId}
           onChange={onChange}
@@ -116,17 +108,7 @@ const EventAlter = ({ menu, API }) => {
           size="small"
           name="Title"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제목"
           value={altEvent.Title}
           onChange={onChange}
@@ -136,32 +118,13 @@ const EventAlter = ({ menu, API }) => {
           size="small"
           name="EventTime"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="기간"
           value={altEvent.EventTime}
           onChange={onChange}
           required
         />
-        <Box
-          sx={{
-            p: 1,
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignContent: "center",
-            justifyContent: "flexStart",
-          }}
-        >
+        <Box sx={IMG}>
           {menu[0].Image ? (
             <>
               {Object.values(menu[0].Image).map((e, idx) => {
@@ -179,51 +142,25 @@ const EventAlter = ({ menu, API }) => {
         />
         <span>
           {proceed === "진행중" ? (
-            <Button
-              onClick={proceedState}
-              sx={{
-                m: 1,
-                color: "white",
-                bgcolor: "#1877d5",
-              }}
-            >
+            <Button onClick={proceedState} sx={PROCEED}>
               진행중
             </Button>
           ) : (
-            <Button
-              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-              variant="outlined"
-              onClick={proceedState}
-            >
+            <Button sx={END} variant="outlined" onClick={proceedState}>
               진행중
             </Button>
           )}
           {proceed === "종료" ? (
-            <Button
-              onClick={endProceedState}
-              sx={{
-                m: 1,
-                color: "white",
-                bgcolor: "#1877d5",
-              }}
-            >
+            <Button onClick={endProceedState} sx={PROCEED}>
               종료
             </Button>
           ) : (
-            <Button
-              sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-              variant="outlined"
-              onClick={endProceedState}
-            >
+            <Button sx={END} variant="outlined" onClick={endProceedState}>
               종료
             </Button>
           )}
         </span>
-        <Button
-          type="submit"
-          sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-          variant="outlined"
-        >
+        <Button type="submit" sx={END} variant="outlined">
           등록
         </Button>
       </Box>

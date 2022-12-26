@@ -14,7 +14,7 @@ import NoticeAlter from "./NoticeAlter"; // 공지 수정
 import MenuExcelDownload from "./MenuExcelDownload"; // 메뉴 엑셀 다운로드
 import EventExcelDownload from "./eventExcelDownload"; // 이벤트 엑셀 다운로드
 import NoticeExcelDownload from "./NoticeExcelDownload"; // 공지 엑셀 다운로드
-import ButtonGroup from "@mui/material/ButtonGroup";
+import ButtonGroup from "@mui/material/ButtonGroup"; // 버튼 그룹핑
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -70,6 +70,7 @@ const Home = () => {
       setSmsAuth(true);
     }
   }, [setSmsAuth]); // SMS 인증 상태 값이 설정 될 때마다 적용
+
   const generatorAPI = async () => {
     if (smsAuth) {
       // SMS 인증이 성공하면 유저 정보 조회
@@ -269,95 +270,99 @@ const Home = () => {
   let count = 1;
   let imgCount = 1;
   let noticeCount = 1;
+
+  const STACK = {
+    padding: 0.5,
+    bgcolor: "#6ab2fc",
+    height: 200,
+    width: 130,
+    justifyContent: "center",
+    alignItems: "flex-start",
+    flexDirection: "column",
+  };
+  const SIDEBUTTON = {
+    color: "white",
+    bgcolor: "inherit",
+    border: 0,
+  };
+  const MMBTN = {
+    m: 1,
+    color: "white",
+    borderColor: "white",
+  };
+  const MMB = {
+    textAlign: "center",
+    height: 208,
+    minWidth: "100%",
+    bgcolor: "#93DAFF",
+  };
+  const SELECT = {
+    height: 38,
+  };
+  const FONTCONTROL = { m: 1, minWidth: 100, height: 40 };
+  const TBTN = { m: 0.2, color: "gray", borderColor: "gray" };
+  const TCELL = { color: "white" };
+  const TXTFID = { flexGrow: 1.5 };
+  const TABLEFORM = { minWidth: 800, textAlign: "center" };
+  const TABLEINDEX = {
+    minWidth: 800,
+    textAlign: "center",
+    bgcolor: "#1877d5",
+  };
+  const TABLEROW = {
+    "&:last-child td, &:last-child th": { border: 0 },
+  };
+  const TCBTN = { m: 0.5 };
+
+  const EXITBTN = {
+    m: 0.2,
+    color: "#1877d5",
+    borderColor: "#1877d5",
+  };
+
+  const IMG = {
+    width: 200,
+    height: 150,
+    overflow: "auto",
+    textAlign: "center",
+  };
+
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "nowrap",
-          flexDirection: "row",
-          alignContent: "center",
-          justifyContent: "space-between",
-          minWidth: 800,
-        }}
-      >
+      <div className={style.WRAP}>
         <Box>
-          <Stack
-            sx={{ padding: 0.5, bgcolor: "#6ab2fc", height: 200, width: 130 }}
-            direction="column"
-            justifyContent="center"
-            alignItems="flex-start"
-            spacing={1}
-          >
+          <Stack sx={STACK} spacing={1}>
             <ButtonGroup orientation="vertical">
-              <Button
-                sx={{ color: "white", bgcolor: "inherit", border: 0 }}
-                onClick={generatorAPI}
-              >
+              <Button sx={SIDEBUTTON} onClick={generatorAPI}>
                 API 키 발급
               </Button>
             </ButtonGroup>
             <ButtonGroup orientation="vertical">
               <CopyToClipboard text={apiKey}>
-                <Button
-                  sx={{ color: "white", bgcolor: "inherit", border: 0 }}
-                  onClick={() => alert("클립보드 복사")}
-                >
+                <Button sx={SIDEBUTTON} onClick={() => alert("클립보드 복사")}>
                   클립보드 복사
                 </Button>
               </CopyToClipboard>
             </ButtonGroup>
             <ButtonGroup orientation="vertical">
-              <Button
-                sx={{ color: "white", bgcolor: "inherit", border: 0 }}
-                onClick={logOut}
-              >
+              <Button sx={SIDEBUTTON} onClick={logOut}>
                 로그아웃
               </Button>
             </ButtonGroup>
           </Stack>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            alignContent: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            flexGrow: "3",
-          }}
-        >
-          <Box
-            sx={{
-              textAlign: "center",
-              height: 208,
-              minWidth: "100%",
-              bgcolor: "#93DAFF",
-            }}
-          >
+        <Box className={style.mainMenuWrap}>
+          <Box sx={MMB}>
             {smsAuth ? (
               <Box sx={{ mt: 6 }}>
                 <div>
-                  <Button
-                    sx={{ m: 1, color: "white", borderColor: "white" }}
-                    variant="outlined"
-                    onClick={menuView}
-                  >
+                  <Button sx={MMBTN} variant="outlined" onClick={menuView}>
                     제품 관리
                   </Button>
-                  <Button
-                    sx={{ m: 1, color: "white", borderColor: "white" }}
-                    variant="outlined"
-                    onClick={eventView}
-                  >
+                  <Button sx={MMBTN} variant="outlined" onClick={eventView}>
                     이벤트 관리
                   </Button>
-                  <Button
-                    sx={{ m: 1, color: "white", borderColor: "white" }}
-                    variant="outlined"
-                    onClick={noticeView}
-                  >
+                  <Button sx={MMBTN} variant="outlined" onClick={noticeView}>
                     공지 사항 관리
                   </Button>
                 </div>
@@ -373,29 +378,15 @@ const Home = () => {
         <>
           {Array.isArray(menuList) ? (
             <>
-              <form
-                onSubmit={SearchForm}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "nowrap",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "20px",
-                  minWidth: 800,
-                }}
-              >
-                <FormControl sx={{ m: 1, minWidth: 100, height: 40 }}>
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Category
-                  </InputLabel>
+              <form onSubmit={SearchForm} className={style.SearchForm}>
+                <FormControl sx={FONTCONTROL}>
+                  <InputLabel>Category</InputLabel>
                   <Select
                     name="Category"
                     value={category}
                     onChange={handleCategory}
                     autoWidth
-                    sx={{ height: 38 }}
+                    sx={SELECT}
                   >
                     <MenuItem value="분류">분류</MenuItem>
                     <MenuItem value="콜드 브루">콜드 브루</MenuItem>
@@ -419,17 +410,13 @@ const Home = () => {
                   placeholder="Search Bar"
                   name="Search"
                   variant="standard"
-                  sx={{ flexGrow: 1.5 }}
+                  sx={TXTFID}
                 />
-                <Button
-                  type="submit"
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
-                  variant="outlined"
-                >
+                <Button type="submit" sx={TBTN} variant="outlined">
                   제품 검색
                 </Button>
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={showMenuCreateModal}
                 >
@@ -440,38 +427,32 @@ const Home = () => {
                   MENUSEARCHALL={MENUSEARCHALL}
                 />
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={() => setModal(!modal)}
                 >
                   닫기
                 </Button>
               </form>
-              <Table
-                sx={{
-                  minWidth: 800,
-                  textAlign: "center",
-                  bgcolor: "#1877d5",
-                }}
-              >
+              <Table sx={TABLEINDEX}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       제품이미지
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       카테고리
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       제품이름
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       제품번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       수정/삭제
                     </TableCell>
                   </TableRow>
@@ -484,14 +465,9 @@ const Home = () => {
             {Array.isArray(menuList)
               ? menuList.map((menu, idx) => {
                   return (
-                    <Table sx={{ minWidth: 800, textAlign: "center" }}>
+                    <Table sx={TABLEFORM}>
                       <TableHead>
-                        <TableRow
-                          key={idx}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
+                        <TableRow key={idx} sx={TABLEROW}>
                           <TableCell align="center">{count++}</TableCell>
                           <TableCell align="center">
                             <img src={menu.Image} width="100" />
@@ -501,14 +477,14 @@ const Home = () => {
                           <TableCell align="center">{menu.ProductId}</TableCell>
                           <TableCell align="center">
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickAlt}
                             >
                               수정
                             </Button>
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickDel}
                             >
@@ -535,7 +511,7 @@ const Home = () => {
         <MenuCreate apiKey={apiKey} API={API} MENUSEARCHALL={MENUSEARCHALL} />
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
@@ -555,7 +531,7 @@ const Home = () => {
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
@@ -571,34 +547,18 @@ const Home = () => {
           {/* 인자 값이 배열일 경우 */}
           {Array.isArray(eventList) ? (
             <>
-              <form
-                onSubmit={EventForm}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "nowrap",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "20px",
-                  minWidth: 800,
-                }}
-              >
+              <form onSubmit={EventForm} className={style.SearchForm}>
                 <TextField
                   placeholder="Search Bar"
                   name="Search"
                   variant="standard"
-                  sx={{ flexGrow: 1.5 }}
+                  sx={TXTFID}
                 />
-                <Button
-                  type="submit"
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
-                  variant="outlined"
-                >
+                <Button type="submit" sx={TBTN} variant="outlined">
                   이벤트 검색
                 </Button>
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={showEventCreateModal}
                 >
@@ -609,44 +569,38 @@ const Home = () => {
                   EVENTSEARCHALL={EVENTSEARCHALL}
                 />
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={() => setEventModal(!eventModal)}
                 >
                   닫기
                 </Button>
               </form>
-              <Table
-                sx={{
-                  minWidth: 800,
-                  textAlign: "center",
-                  bgcolor: "#1877d5",
-                }}
-              >
+              <Table sx={TABLEINDEX}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       이미지
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       작성일자
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       고유번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       제목
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       기간
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       진행 현황
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       수정/삭제
                     </TableCell>
                   </TableRow>
@@ -662,30 +616,13 @@ const Home = () => {
                     imgCount++;
                   }
                   return (
-                    <Table
-                      sx={{
-                        minWidth: 800,
-                        textAlign: "center",
-                      }}
-                    >
+                    <Table sx={TABLEFORM}>
                       <TableHead>
-                        <TableRow
-                          key={idx}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
+                        <TableRow key={idx} sx={TABLEROW}>
                           <TableCell align="center">{count++}</TableCell>
                           <TableCell align="center">
                             {event.Image ? (
-                              <Box
-                                sx={{
-                                  width: 200,
-                                  height: 150,
-                                  overflow: "auto",
-                                  textAlign: "center",
-                                }}
-                              >
+                              <Box sx={IMG}>
                                 {/* 조회된 아이템에 따라 카운트 증가 */}
                                 {Object.keys(event.Image).map((e, idx) => {
                                   return (
@@ -698,13 +635,7 @@ const Home = () => {
                                 })}
                               </Box>
                             ) : (
-                              <Box
-                                sx={{
-                                  width: 200,
-                                  height: 200,
-                                  overflow: "auto",
-                                }}
-                              >
+                              <Box sx={IMG}>
                                 <img key={idx} src="#" width="150" />
                               </Box>
                             )}
@@ -718,14 +649,14 @@ const Home = () => {
                           <TableCell align="center">{event.Proceed}</TableCell>
                           <TableCell align="center">
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickEventAlt}
                             >
                               수정
                             </Button>
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickEventDel}
                             >
@@ -757,7 +688,7 @@ const Home = () => {
         />
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
@@ -777,7 +708,7 @@ const Home = () => {
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
@@ -793,34 +724,18 @@ const Home = () => {
         <>
           {Array.isArray(noticeList) ? (
             <>
-              <form
-                onSubmit={noticeSearchForm}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "nowrap",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: "20px",
-                  minWidth: 800,
-                }}
-              >
+              <form onSubmit={noticeSearchForm} className={style.SearchForm}>
                 <TextField
                   placeholder="Search Bar"
                   name="Search"
                   variant="standard"
-                  sx={{ flexGrow: 1.5 }}
+                  sx={TXTFID}
                 />
-                <Button
-                  type="submit"
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
-                  variant="outlined"
-                >
+                <Button type="submit" sx={TBTN} variant="outlined">
                   공지 검색
                 </Button>
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={NoticeCreateModal}
                 >
@@ -831,41 +746,35 @@ const Home = () => {
                   NOTICESEARCHALL={NOTICESEARCHALL}
                 />
                 <Button
-                  sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
+                  sx={TBTN}
                   variant="outlined"
                   onClick={() => setNoticeModal(!noticeModal)}
                 >
                   닫기
                 </Button>
               </form>
-              <Table
-                sx={{
-                  minWidth: 800,
-                  textAlign: "center",
-                  bgcolor: "#1877d5",
-                }}
-              >
+              <Table sx={TABLEINDEX}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       글번호
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       게시글 ID
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       제목
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       내용
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       날짜
                     </TableCell>
-                    <TableCell align="center" sx={{ color: "white" }}>
+                    <TableCell align="center" sx={TCELL}>
                       수정/삭제
                     </TableCell>
                   </TableRow>
@@ -881,19 +790,9 @@ const Home = () => {
                     noticeCount++;
                   }
                   return (
-                    <Table
-                      sx={{
-                        minWidth: 800,
-                        textAlign: "center",
-                      }}
-                    >
+                    <Table sx={TABLEFORM}>
                       <TableHead>
-                        <TableRow
-                          key={idx}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
+                        <TableRow key={idx} sx={TABLEROW}>
                           <TableCell align="center">{count++}</TableCell>
                           <TableCell align="center">{notice.Num}</TableCell>
                           <TableCell align="center">{notice.Id}</TableCell>
@@ -902,14 +801,14 @@ const Home = () => {
                           <TableCell align="center">{notice.Date}</TableCell>
                           <TableCell align="center">
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickWriteAlt}
                             >
                               수정
                             </Button>
                             <Button
-                              sx={{ m: 0.5 }}
+                              sx={TCBTN}
                               variant="outlined"
                               onClick={onClickWriteDel}
                             >
@@ -936,7 +835,7 @@ const Home = () => {
         <NoticeCreate valid={noticeList} API={API} />
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회
@@ -957,7 +856,7 @@ const Home = () => {
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
         <Button
           size="small"
-          sx={{ m: 0.2, color: "#1877d5", borderColor: "#1877d5" }}
+          sx={EXITBTN}
           variant="outlined"
           onClick={async () => {
             // 닫을 때 목록 갱신을 위해 전체 조회

@@ -9,14 +9,14 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-import { decrypt } from "../Crypto/chiper";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-const theme = createTheme();
-const RULEID = process.env.REACT_APP_RULE_ID;
-const RULEPW = process.env.REACT_APP_RULE_PW;
-let regexId = new RegExp(RULEID);
-let regexPW = new RegExp(RULEPW);
+import { decrypt } from "../Crypto/chiper"; // 복호화 모듈 호출
+import { Link, useNavigate } from "react-router-dom"; // 렌더링 없이 화면 이동 하기 위해 사용
+import { useEffect, useState } from "react"; // 조건 부 렌더링 및 상태 값 저장
+const theme = createTheme(); // MUI 테마 사용
+const RULEID = process.env.REACT_APP_RULE_ID; // ID 룰 (이메일 형식)
+const RULEPW = process.env.REACT_APP_RULE_PW; // PW룰 (8~16자 특수문자 포함 대소문자 포함)
+let regexId = new RegExp(RULEID); // 검증
+let regexPW = new RegExp(RULEPW); // 검증
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,9 +33,11 @@ const Login = () => {
   const loginSubmit = async (e) => {
     e.preventDefault(); // Submit 기본 새로고침 막음
     // DOM의 태그들의 이름의 값 저장
-    const userId = e.target.email.value;
-    const userPw = e.target.password.value;
-    const API = process.env.REACT_APP_API;
+    const userId = e.target.email.value; // 사용자 이메일 입력
+    const userPw = e.target.password.value; // 사용자 비밀번호 입력
+    const API = process.env.REACT_APP_API; // 사용자 할당 API 키
+
+    // 입력한 사용자 정보 형식 검증
     if (regexId.test(userId) && regexPW.test(userPw)) {
       // 유저 정보 조회
       const res = await axios.get(API + "/users");
@@ -57,23 +59,29 @@ const Login = () => {
       alert("올바른 형식이 아닙니다.");
     }
   };
-
+  const LOGINBOX = {
+    marginTop: 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+  const AVARTAR = {
+    m: 1,
+    bgcolor: "secondary.main",
+    bgcolor: "#1c75cf",
+  };
+  const LINK = {
+    textDecoration: "none",
+    color: "#1c75ce",
+    fontWeight: "bold",
+  };
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Avatar
-              sx={{ m: 1, bgcolor: "secondary.main", bgcolor: "#1c75cf" }}
-            >
+          <Box sx={LOGINBOX}>
+            <Avatar sx={AVARTAR}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -113,28 +121,12 @@ const Login = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link
-                    to="/findPw"
-                    variant="body2"
-                    style={{
-                      textDecoration: "none",
-                      color: "#1c75ce",
-                      fontWeight: "bold",
-                    }}
-                  >
+                  <Link to="/findPw" variant="body2" style={LINK}>
                     비밀번호 찾기
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link
-                    to="/register"
-                    variant="body2"
-                    style={{
-                      textDecoration: "none",
-                      color: "#1c75ce",
-                      fontWeight: "bold",
-                    }}
-                  >
+                  <Link to="/register" variant="body2" style={LINK}>
                     회원가입
                   </Link>
                 </Grid>

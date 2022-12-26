@@ -98,12 +98,13 @@ const MenuExcelDownload = ({ apiKey, MENUSEARCHALL }) => {
     FileSaver.saveAs(excelFile, excelFileName + excelFileExtension);
   };
 
+  const EXCEL = {
+    m: 0.2,
+    color: "gray",
+    borderColor: "gray",
+  };
   return (
-    <Button
-      sx={{ m: 0.2, color: "gray", borderColor: "gray" }}
-      variant="outlined"
-      onClick={() => excelDownload(data)}
-    >
+    <Button sx={EXCEL} variant="outlined" onClick={() => excelDownload(data)}>
       엑셀
     </Button>
   );

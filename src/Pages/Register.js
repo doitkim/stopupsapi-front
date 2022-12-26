@@ -78,22 +78,29 @@ const Register = () => {
       alert("올바른 형식이 아닙니다.");
     }
   };
+  const WRAP = {
+    marginTop: 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+  const AVARTAR = {
+    m: 1,
+    bgcolor: "secondary.main",
+    bgcolor: "#1c75cf",
+  };
+  const LINK = {
+    textDecoration: "none",
+    color: "#1c75ce",
+    fontWeight: "bold",
+  };
   return (
     <>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Avatar
-              sx={{ m: 1, bgcolor: "secondary.main", bgcolor: "#1c75cf" }}
-            >
+          <Box sx={WRAP}>
+            <Avatar sx={AVARTAR}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -144,7 +151,7 @@ const Register = () => {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link to="/" variant="body2">
+                  <Link to="/" variant="body2" style={LINK}>
                     이미 계정이 있으신가요?
                   </Link>
                 </Grid>

@@ -44,8 +44,9 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
     setCookChecked([cookChecked[0], event.target.checked]);
   };
 
+  const RADIOCSS = { display: "flex", flexDirection: "column", ml: 3 };
   const DrinkTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="HOT"
         control={
@@ -70,7 +71,7 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
   );
 
   const EatTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="TAKE OUT"
         control={
@@ -95,7 +96,7 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
   );
 
   const CookTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="COOKED"
         control={
@@ -197,22 +198,31 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
     }
   };
 
+  const MENUCREATE = {
+    flexWrap: "nowrap",
+    padding: 10,
+    backgroundColor: "#b5e4fb",
+    overflow: "auto",
+    width: 800,
+    height: 800,
+  };
+  const TITLE = { bgcolor: "#316ca4", minWidth: "450px" };
+  const TEXTFIELD = {
+    m: 1,
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": { borderColor: "#316ca4" },
+    },
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#1877d5",
+      },
+    },
+  };
+  const CLOSE = { m: 1, color: "#5498d8", borderColor: "#1877d5" };
   return (
-    <form
-      onSubmit={menuCreate}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        alignContent: "center",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 10,
-        backgroundColor: "#b5e4fb",
-      }}
-    >
+    <form onSubmit={menuCreate} style={MENUCREATE}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={TITLE}>
           <h1>제품 등록</h1>
         </Box>
         <TextField
@@ -220,17 +230,7 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
           name="Category"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="카테고리"
         />
         <TextField
@@ -256,282 +256,122 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
           name="Name"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="제품 이름"
         />
         <TextField
           size="small"
           name="Image"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="제품 이미지"
         />
         <TextField
           size="small"
           name="Desc"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="제품 설명"
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={TITLE}>
           <h2>제품 영양 성분</h2>
         </Box>
         <TextField
           size="small"
           name="kcal"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="칼로리"
         />
         <TextField
           size="small"
           name="Carbohydrate"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="탄수화물"
         />
         <TextField
           size="small"
           name="Sugar"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="당류"
         />
         <TextField
           size="small"
           name="Na"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="나트륨"
         />
         <TextField
           size="small"
           name="Protein"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="단백질"
         />
         <TextField
           size="small"
           name="Fat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="지방"
         />
         <TextField
           size="small"
           name="Cholesterol"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="콜레스테롤"
         />
         <TextField
           size="small"
           name="TransFat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="트렌스지방"
         />
         <TextField
           size="small"
           name="Caffeine"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="카페인"
         />
         <TextField
           size="small"
           name="SaturatedFat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="포화지방"
         />
         <TextField
           size="small"
           name="DefaultSize"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="기준 사이즈"
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={TITLE}>
           <h2>제품 사이즈 별 가격 (음료)</h2>
         </Box>
         <TextField
           size="small"
           name="Tall"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="Tall"
         />
         <TextField
           size="small"
           name="Grande"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="Grade"
         />
         <TextField
@@ -539,45 +379,25 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
           name="Venti"
           placeholder="Venti"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="Venti"
         />
       </Box>
 
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={TITLE}>
           <h2>제품 가격 (디저트)</h2>
         </Box>
         <TextField
           size="small"
           name="Desert"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFIELD}
           label="Desert"
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={TITLE}>
           <h2>옵션</h2>
         </Box>
       </Box>
@@ -622,11 +442,7 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
           {CookTypeCheck}
         </Box>
       </Box>
-      <Button
-        type="submit"
-        sx={{ m: 1, color: "#5498d8", borderColor: "#1877d5" }}
-        variant="outlined"
-      >
+      <Button type="submit" sx={CLOSE} variant="outlined">
         등록
       </Button>
     </form>

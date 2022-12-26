@@ -90,9 +90,13 @@ const MenuAlter = ({ menu, API }) => {
       setCookChecked([altMenu.Cooked, altMenu.NotCooked]);
     }
   }, [altMenu]);
-
+  const RADIOCSS = {
+    display: "flex",
+    flexDirection: "column",
+    ml: 3,
+  };
   const DrinkTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="HOT"
         control={
@@ -117,7 +121,7 @@ const MenuAlter = ({ menu, API }) => {
   );
 
   const EatTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="TAKE OUT"
         control={
@@ -142,7 +146,7 @@ const MenuAlter = ({ menu, API }) => {
   );
 
   const CookTypeCheck = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
+    <Box sx={RADIOCSS}>
       <FormControlLabel
         label="COOKED"
         control={
@@ -239,22 +243,28 @@ const MenuAlter = ({ menu, API }) => {
     e.target.password.value = "";
   };
 
+  const MENUCREATE = {
+    padding: 10,
+    backgroundColor: "#b5e4fb",
+    overflow: "auto",
+    width: 800,
+    height: 800,
+  };
+  const TEXTFEILD = {
+    m: 1,
+    "& .MuiOutlinedInput-root": {
+      "& > fieldset": { borderColor: "#316ca4" },
+    },
+    "& .MuiOutlinedInput-root:hover": {
+      "& > fieldset": {
+        borderColor: "#1877d5",
+      },
+    },
+  };
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        flexWrap: "wrap",
-        alignContent: "center",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: 10,
-        backgroundColor: "#b5e4fb",
-      }}
-    >
+    <form onSubmit={onSubmit} style={MENUCREATE}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h1>제품 수정</h1>
         </Box>
         <TextField
@@ -262,17 +272,7 @@ const MenuAlter = ({ menu, API }) => {
           name="Category"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="카테고리"
           onChange={onChange}
           value={altMenu.Category}
@@ -282,17 +282,7 @@ const MenuAlter = ({ menu, API }) => {
           name="ProductId"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제품번호"
           onChange={onChange}
           value={altMenu.ProductId}
@@ -303,17 +293,7 @@ const MenuAlter = ({ menu, API }) => {
           name="Name"
           required
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제품 이름"
           onChange={onChange}
           value={altMenu.Name}
@@ -322,17 +302,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Image"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제품 이미지"
           onChange={onChange}
           value={altMenu.Image}
@@ -341,41 +311,21 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Desc"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="제품 설명"
           onChange={onChange}
           value={altMenu.Desc}
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h2>제품 영양 성분</h2>
         </Box>
         <TextField
           size="small"
           name="kcal"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="칼로리"
           onChange={onChange}
           value={altMenu.Kcal}
@@ -384,17 +334,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Carbohydrate"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="탄수화물"
           onChange={onChange}
           value={altMenu.Carbohydrate}
@@ -403,17 +343,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Sugar"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="당류"
           onChange={onChange}
           value={altMenu.Sugar}
@@ -422,17 +352,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Na"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="나트륨"
           onChange={onChange}
           value={altMenu.Na}
@@ -441,17 +361,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Protein"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="단백질"
           onChange={onChange}
           value={altMenu.Protein}
@@ -460,17 +370,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Fat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="지방"
           onChange={onChange}
           value={altMenu.Fat}
@@ -479,17 +379,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Cholesterol"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="콜레스테롤"
           onChange={onChange}
           value={altMenu.Cholesterol}
@@ -498,17 +388,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="TransFat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="트렌스지방"
           onChange={onChange}
           value={altMenu.TransFat}
@@ -517,17 +397,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Caffeine"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="카페인"
           onChange={onChange}
           value={altMenu.Caffeine}
@@ -536,17 +406,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="SaturatedFat"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="포화지방"
           onChange={onChange}
           value={altMenu.SaturatedFat}
@@ -555,41 +415,21 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="DefaultSize"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="기준 사이즈"
           onChange={onChange}
           value={altMenu.DefaultSize}
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4", minWidth: "450px" }}>
           <h2>제품 사이즈 별 가격 (음료)</h2>
         </Box>
         <TextField
           size="small"
           name="Tall"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="Tall"
           onChange={onChange}
           value={altMenu.Tall}
@@ -598,17 +438,7 @@ const MenuAlter = ({ menu, API }) => {
           size="small"
           name="Grande"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="Grade"
           onChange={onChange}
           value={altMenu.Grande}
@@ -618,17 +448,7 @@ const MenuAlter = ({ menu, API }) => {
           name="Venti"
           placeholder="Venti"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="Venti"
           onChange={onChange}
           value={altMenu.Venti}
@@ -636,31 +456,21 @@ const MenuAlter = ({ menu, API }) => {
       </Box>
 
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h2>제품 가격 (디저트)</h2>
         </Box>
         <TextField
           size="small"
           name="Desert"
           autoFocus
-          sx={{
-            m: 1,
-            "& .MuiOutlinedInput-root": {
-              "& > fieldset": { borderColor: "#316ca4" },
-            },
-            "& .MuiOutlinedInput-root:hover": {
-              "& > fieldset": {
-                borderColor: "#1877d5",
-              },
-            },
-          }}
+          sx={TEXTFEILD}
           label="Desert"
           onChange={onChange}
           value={altMenu.Desert}
         />
       </Box>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4", width: "60vw" }}>
+        <Box sx={{ bgcolor: "#316ca4" }}>
           <h2>옵션</h2>
         </Box>
       </Box>
