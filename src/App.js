@@ -1,3 +1,4 @@
+import Footer from "./Pages/Footer";
 import { Header } from "./Pages/Header";
 import LoginPage from "./Pages/Login";
 import AppRouter from "./routes/router";
@@ -9,6 +10,7 @@ function App() {
       <AppRouter>
         <LoginPage />
       </AppRouter>
+      <Footer />
     </div>
   );
 }

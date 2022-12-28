@@ -43,3 +43,10 @@
   align-items: center;
   flex-grow: 3;
 }
+
+.EMPTYIMAGE {
+  background-image: url("https://p4.wallpaperbetter.com/wallpaper/276/143/635/computer-minimalism-web-developer-hd-wallpaper-preview.jpg");
+  background-position: center center;
+  background-size: cover;
+  height: 63.4vh;
+}

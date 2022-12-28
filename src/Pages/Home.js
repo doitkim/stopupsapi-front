@@ -300,10 +300,13 @@ const Home = () => {
     height: 38,
   };
   const FONTCONTROL = { m: 1, minWidth: 100, height: 40 };
-  const TBTN = { m: 0.2, color: "gray", borderColor: "gray" };
+  const TBTN = { m: 1.2, color: "gray", borderColor: "gray" };
   const TCELL = { color: "white" };
   const TXTFID = { flexGrow: 1.5 };
-  const TABLEFORM = { minWidth: 800, textAlign: "center" };
+  const TABLEFORM = {
+    minWidth: 800,
+    textAlign: "center",
+  };
   const TABLEINDEX = {
     minWidth: 800,
     textAlign: "center",
@@ -311,6 +314,12 @@ const Home = () => {
   };
   const TABLEROW = {
     "&:last-child td, &:last-child th": { border: 0 },
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    alignContent: "center",
+    justifyContent: "space-around",
+    alignItems: "center",
   };
   const TCBTN = { m: 0.5 };
 
@@ -321,7 +330,7 @@ const Home = () => {
   };
 
   const IMG = {
-    width: 200,
+    width: 150,
     height: 150,
     overflow: "auto",
     textAlign: "center",
@@ -374,6 +383,9 @@ const Home = () => {
         </Box>
       </div>
       {/* 인자 값이 배열일 경우 */}
+      {modal || eventModal || noticeModal ? null : (
+        <div className={style.EMPTYIMAGE} />
+      )}
       {modal ? (
         <>
           {Array.isArray(menuList) ? (
@@ -460,7 +472,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div>
+          <div style={{ height: "46.4vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(menuList)
               ? menuList.map((menu, idx) => {
@@ -468,14 +480,14 @@ const Home = () => {
                     <Table sx={TABLEFORM}>
                       <TableHead>
                         <TableRow key={idx} sx={TABLEROW}>
-                          <TableCell align="center">{count++}</TableCell>
-                          <TableCell align="center">
-                            <img src={menu.Image} width="100" />
+                          <TableCell>{count++}</TableCell>
+                          <TableCell>
+                            <img src={menu.Image} width="150" />
                           </TableCell>
-                          <TableCell align="center">{menu.Category}</TableCell>
-                          <TableCell align="center">{menu.Name}</TableCell>
-                          <TableCell align="center">{menu.ProductId}</TableCell>
-                          <TableCell align="center">
+                          <TableCell>{menu.Category}</TableCell>
+                          <TableCell>{menu.Name}</TableCell>
+                          <TableCell>{menu.ProductId}</TableCell>
+                          <TableCell>
                             <Button
                               sx={TCBTN}
                               variant="outlined"
@@ -608,7 +620,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div>
+          <div style={{ height: "46.4vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(eventList)
               ? eventList.map((event, idx) => {
@@ -629,7 +641,7 @@ const Home = () => {
                                     <img
                                       key={idx}
                                       src={API + event.Image[e]}
-                                      width="150"
+                                      width="100"
                                     />
                                   );
                                 })}
@@ -782,7 +794,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div>
+          <div style={{ height: "46.4vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(noticeList)
               ? noticeList.map((notice, idx) => {
