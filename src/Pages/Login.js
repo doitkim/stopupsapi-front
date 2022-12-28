@@ -60,10 +60,11 @@ const Login = () => {
     }
   };
   const LOGINBOX = {
-    marginTop: 8,
+    marginTop: "24.5vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginBottom: "24.5vh",
   };
   const AVARTAR = {
     m: 1,

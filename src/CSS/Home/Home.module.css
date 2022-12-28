@@ -49,4 +49,5 @@
   background-position: center center;
   background-size: cover;
   height: 63.4vh;
+  min-width: 800px;
 }
