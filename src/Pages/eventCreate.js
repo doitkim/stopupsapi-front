@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EventCreate = ({ valid, API }) => {
   const [time, setTime] = useState("");
@@ -11,6 +12,7 @@ const EventCreate = ({ valid, API }) => {
   const dates = String(date.getDate()).padStart(2, "0");
   const dateString = `${Year}-${Month}-${dates}`;
   const [proceed, setProceed] = useState("");
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setTime(e.target.value);
@@ -34,7 +36,7 @@ const EventCreate = ({ valid, API }) => {
       formData.append("file", e.target.ImgFile.files[i]);
     }
     try {
-      await axios.post(API + "/event/create", formData);
+      await axios.post(API + "/event/create", formData).then(navigate("/"));
     } catch (error) {
       console.error(error);
     }

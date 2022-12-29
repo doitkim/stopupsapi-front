@@ -2,8 +2,10 @@ import axios from "axios";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
+  const navigate = useNavigate();
   const [drinkChecked, setDrinkChecked] = useState([true, false]);
   const [eatChecked, setEatChecked] = useState([true, false]);
   const [cookChecked, setCookChecked] = useState([true, false]);
@@ -178,18 +180,20 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
 
     if (res.data[0] === undefined || res.data[0].Name !== Name) {
       try {
-        await axios.post(API + "/menu/create", {
-          Category,
-          ProductId,
-          Name,
-          Image,
-          Desc,
-          Nutrient,
-          Price,
-          DrinkType,
-          EatType,
-          CookType,
-        });
+        await axios
+          .post(API + "/menu/create", {
+            Category,
+            ProductId,
+            Name,
+            Image,
+            Desc,
+            Nutrient,
+            Price,
+            DrinkType,
+            EatType,
+            CookType,
+          })
+          .then(navigate("/"));
       } catch (error) {
         console.error(error);
       }

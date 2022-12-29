@@ -477,9 +477,9 @@ const Home = () => {
             {Array.isArray(menuList)
               ? menuList.map((menu, idx) => {
                   return (
-                    <Table sx={TABLEFORM}>
+                    <Table sx={TABLEFORM} key={idx}>
                       <TableHead>
-                        <TableRow key={idx} sx={TABLEROW}>
+                        <TableRow sx={TABLEROW}>
                           <TableCell>{count++}</TableCell>
                           <TableCell>
                             <img src={menu.Image} width="150" />
@@ -628,9 +628,9 @@ const Home = () => {
                     imgCount++;
                   }
                   return (
-                    <Table sx={TABLEFORM}>
+                    <Table sx={TABLEFORM} key={idx}>
                       <TableHead>
-                        <TableRow key={idx} sx={TABLEROW}>
+                        <TableRow sx={TABLEROW}>
                           <TableCell align="center">{count++}</TableCell>
                           <TableCell align="center">
                             {event.Image ? (
@@ -802,9 +802,9 @@ const Home = () => {
                     noticeCount++;
                   }
                   return (
-                    <Table sx={TABLEFORM}>
+                    <Table sx={TABLEFORM} key={idx}>
                       <TableHead>
-                        <TableRow key={idx} sx={TABLEROW}>
+                        <TableRow sx={TABLEROW}>
                           <TableCell align="center">{count++}</TableCell>
                           <TableCell align="center">{notice.Num}</TableCell>
                           <TableCell align="center">{notice.Id}</TableCell>

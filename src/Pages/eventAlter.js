@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Title = { color: "#5498d8", bgcolor: "#316ca4" };
 const TEXTFEILD = {
@@ -30,6 +31,7 @@ const EventAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
   // value 만 사용할 경우 input 값 수정이 불가
   // 제품 ID는 바뀌면 안되므로 disable 처리
+  const navigate = useNavigate();
   const [altEvent, setAltEvent] = useState({});
   const [proceed, setProceed] = useState("");
 
@@ -70,7 +72,7 @@ const EventAlter = ({ menu, API }) => {
 
     try {
       // 정보 수정후 등록
-      await axios.post(API + "/event/alter", formData);
+      await axios.post(API + "/event/alter", formData).then(navigate("/"));
     } catch (error) {
       console.error(error);
     }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const NoticeCreate = ({ valid, API }) => {
   const [time, setTime] = useState("");
@@ -10,6 +11,7 @@ const NoticeCreate = ({ valid, API }) => {
   const Month = String(date.getMonth() + 1).padStart(2, "0");
   const dates = String(date.getDate()).padStart(2, "0");
   const dateString = `${Year}-${Month}-${dates}`;
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setTime(e.target.value);
@@ -29,13 +31,15 @@ const NoticeCreate = ({ valid, API }) => {
     const writeIndex = e.target.글번호.value;
 
     try {
-      await axios.post(API + "/notice/create", {
-        writeDate,
-        writeTitle,
-        writeContent,
-        writeId,
-        writeIndex,
-      });
+      await axios
+        .post(API + "/notice/create", {
+          writeDate,
+          writeTitle,
+          writeContent,
+          writeId,
+          writeIndex,
+        })
+        .then(navigate("/"));
     } catch (error) {
       console.error(error);
     }

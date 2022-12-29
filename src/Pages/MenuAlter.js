@@ -7,10 +7,12 @@ import {
   FormControlLabel,
   TextField,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const MenuAlter = ({ menu, API }) => {
   // 수정할 기존 상품의 정보를 받아서 표시하고 이후 바뀐 정보를 다시 저장
   // value 만 사용할 경우 input 값 수정이 불가
   // 제품 ID는 바뀌면 안되므로 disable 처리
+  const navigate = useNavigate();
   const [altMenu, setAltMenu] = useState({});
   const [drinkChecked, setDrinkChecked] = useState([true, false]);
   const [eatChecked, setEatChecked] = useState([true, false]);
@@ -224,18 +226,20 @@ const MenuAlter = ({ menu, API }) => {
 
     try {
       // 정보 수정후 등록
-      await axios.post(API + "/menu/alter", {
-        Category,
-        ProductId,
-        Name,
-        Image,
-        Desc,
-        Nutrient,
-        Price,
-        DrinkType,
-        EatType,
-        CookType,
-      });
+      await axios
+        .post(API + "/menu/alter", {
+          Category,
+          ProductId,
+          Name,
+          Image,
+          Desc,
+          Nutrient,
+          Price,
+          DrinkType,
+          EatType,
+          CookType,
+        })
+        .then(navigate("/"));
     } catch (error) {
       console.error(error);
     }

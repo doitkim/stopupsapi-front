@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const NoticeAlter = ({ menu, API }) => {
   const [altNotice, setAltNotice] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAltNotice({
@@ -27,12 +29,14 @@ const NoticeAlter = ({ menu, API }) => {
     const Num = e.target.Num.value;
     try {
       // 정보 수정후 등록
-      await axios.post(API + "/notice/alter", {
-        Title,
-        Desc,
-        Id,
-        Num,
-      });
+      await axios
+        .post(API + "/notice/alter", {
+          Title,
+          Desc,
+          Id,
+          Num,
+        })
+        .then(navigate("/"));
     } catch (error) {
       console.error(error);
     }
