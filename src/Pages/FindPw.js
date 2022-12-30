@@ -95,10 +95,11 @@ const FindPw = () => {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: "23.6vh",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              marginBottom: "23.7vh",
             }}
           >
             <Avatar
@@ -107,7 +108,7 @@ const FindPw = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              비밀번호 찾기
+              비밀번호 재설정
             </Typography>
             <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>

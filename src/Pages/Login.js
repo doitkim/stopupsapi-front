@@ -123,7 +123,7 @@ const Login = () => {
               <Grid container>
                 <Grid item xs>
                   <Link to="/findPw" variant="body2" style={LINK}>
-                    비밀번호 찾기
+                    비밀번호 재설정
                   </Link>
                 </Grid>
                 <Grid item>
