@@ -79,8 +79,8 @@ const Register = () => {
     }
   };
   const WRAP = {
-    marginTop: "20.6vh",
-    marginBottom: "20.6vh",
+    marginTop: "24.7vh",
+    marginBottom: "28.3vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

@@ -472,7 +472,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div style={{ height: "46.4vh", overflow: "auto" }}>
+          <div style={{ height: "57.1vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(menuList)
               ? menuList.map((menu, idx) => {
@@ -620,7 +620,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div style={{ height: "46.4vh", overflow: "auto" }}>
+          <div style={{ height: "57.1vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(eventList)
               ? eventList.map((event, idx) => {
@@ -794,7 +794,7 @@ const Home = () => {
               </Table>
             </>
           ) : null}
-          <div style={{ height: "46.4vh", overflow: "auto" }}>
+          <div style={{ height: "57.1vh", overflow: "auto" }}>
             {/* 인자가 배열일 경우 map 사용 */}
             {Array.isArray(noticeList)
               ? noticeList.map((notice, idx) => {

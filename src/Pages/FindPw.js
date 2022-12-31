@@ -95,11 +95,11 @@ const FindPw = () => {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: "23.6vh",
+              marginTop: "27.6vh",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: "23.7vh",
+              marginBottom: "33.7vh",
             }}
           >
             <Avatar
