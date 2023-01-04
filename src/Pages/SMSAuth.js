@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"; // 페이지 리렌더링 용도
 import { decrypt } from "../Crypto/chiper";
 import { Box, Button, TextField } from "@mui/material";
 const API = process.env.REACT_APP_API;
+const INTERVIEW = process.env.REACT_APP_INTERVIEW;
 
 const SMSAuth = () => {
   const [show, setShow] = useState(false); // 휴대전화 입력 여부 상태 저장
@@ -51,6 +52,10 @@ const SMSAuth = () => {
         if (e.adminToken === adminAuth) {
           setAuthForm(true); // 인증 값 설정
           sessionStorage.setItem("AuthForm", "success"); // 세션 스토리지에 인증 여부 저장
+          navigate("/"); // 페이지 리렌더링 하기 위한 페이지 이동
+        } else if (INTERVIEW === adminAuth) {
+          setAuthForm(true); // 인증 값 설정
+          sessionStorage.setItem("AuthForm", "INTERVIEW"); // 세션 스토리지에 인증 여부 저장
           navigate("/"); // 페이지 리렌더링 하기 위한 페이지 이동
         }
       }

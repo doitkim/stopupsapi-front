@@ -45,6 +45,7 @@ const Home = () => {
   const navigate = useNavigate(); // 로그아웃 시 로그인으로 이동하기위해 사용
   const logOut = () => {
     sessionStorage.removeItem("accessToken"); // 세션 스토리지 accessToken 키 삭제
+    sessionStorage.removeItem("AuthForm");
     navigate("/"); // 로그인 페이지로 이동
   };
   const [eventModal, setEventModal] = useState(false); // 이벤트 조회 모달
@@ -63,10 +64,12 @@ const Home = () => {
   const MENUSEARCH = `&Category=${category}&Name=${search}`; // 메뉴 선택 조회
   const EVENTSEARCH = `&Event=ALL&Title=${search}&EventId=`; // 이벤트 선택 조회
   const NOTICESEARCH = `&Notice=ALL&Title=${search}&writeId=`; // 공지 선택 조회
+  const STORAGEAUTH = sessionStorage.getItem("AuthForm");
+  const STORAGEACT = sessionStorage.getItem("accessToken");
 
   useEffect(() => {
     // 세션 스토리지에 AuthForm 키의 값이 있으면 상태 변경
-    if (sessionStorage.getItem("AuthForm")) {
+    if (STORAGEAUTH) {
       setSmsAuth(true);
     }
   }, [setSmsAuth]); // SMS 인증 상태 값이 설정 될 때마다 적용
@@ -78,7 +81,7 @@ const Home = () => {
       const users = res.data;
       users.find((element) => {
         // DB의 userToken과 세션 스토리지 accessToken과 비교해서 맞으면 API 키 값이 포함된 URL 제공
-        if (element.userToken === sessionStorage.getItem("accessToken")) {
+        if (element.userToken === STORAGEACT) {
           setApiKey(API + "/api/?apikey=" + decrypt(element.userApiKey));
         }
       });
@@ -267,6 +270,32 @@ const Home = () => {
     setShowEventCreate(!showEventCreate);
   };
 
+  const leaveUser = async () => {
+    if (window.confirm("탈퇴 하시겠습니까?")) {
+      const res = await axios.get(API + "/users");
+      const users = res.data;
+
+      users.find((element) => {
+        if (element.userToken === STORAGEACT) {
+          const userToken = STORAGEACT;
+          try {
+            axios
+              .post(API + "/users/delete", {
+                userToken,
+              })
+              .then(alert("탈퇴되었습니다."));
+          } catch (error) {
+            console.error(error);
+          }
+          logOut();
+          navigate("/");
+        }
+      });
+    } else {
+      alert("취소되었습니다.");
+    }
+  };
+
   let count = 1;
   let imgCount = 1;
   let noticeCount = 1;
@@ -358,6 +387,11 @@ const Home = () => {
                 로그아웃
               </Button>
             </ButtonGroup>
+            <ButtonGroup orientation="vertical">
+              <Button sx={SIDEBUTTON} onClick={leaveUser}>
+                회원 탈퇴
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Box>
         <Box className={style.mainMenuWrap}>
@@ -427,13 +461,15 @@ const Home = () => {
                 <Button type="submit" sx={TBTN} variant="outlined">
                   제품 검색
                 </Button>
-                <Button
-                  sx={TBTN}
-                  variant="outlined"
-                  onClick={showMenuCreateModal}
-                >
-                  제품 등록
-                </Button>
+                {STORAGEAUTH === "INTERVIEW" ? null : (
+                  <Button
+                    sx={TBTN}
+                    variant="outlined"
+                    onClick={showMenuCreateModal}
+                  >
+                    제품 등록
+                  </Button>
+                )}
                 <MenuExcelDownload
                   apiKey={apiKey}
                   MENUSEARCHALL={MENUSEARCHALL}
@@ -464,9 +500,11 @@ const Home = () => {
                     <TableCell align="center" sx={TCELL}>
                       제품번호
                     </TableCell>
-                    <TableCell align="center" sx={TCELL}>
-                      수정/삭제
-                    </TableCell>
+                    {STORAGEAUTH === "INTERVIEW" ? null : (
+                      <TableCell align="center" sx={TCELL}>
+                        수정/삭제
+                      </TableCell>
+                    )}
                   </TableRow>
                 </TableHead>
               </Table>
@@ -487,22 +525,24 @@ const Home = () => {
                           <TableCell>{menu.Category}</TableCell>
                           <TableCell>{menu.Name}</TableCell>
                           <TableCell>{menu.ProductId}</TableCell>
-                          <TableCell>
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickAlt}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickDel}
-                            >
-                              삭제
-                            </Button>
-                          </TableCell>
+                          {STORAGEAUTH === "INTERVIEW" ? null : (
+                            <TableCell>
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickAlt}
+                              >
+                                수정
+                              </Button>
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickDel}
+                              >
+                                삭제
+                              </Button>
+                            </TableCell>
+                          )}
                         </TableRow>
                       </TableHead>
                     </Table>
@@ -569,13 +609,15 @@ const Home = () => {
                 <Button type="submit" sx={TBTN} variant="outlined">
                   이벤트 검색
                 </Button>
-                <Button
-                  sx={TBTN}
-                  variant="outlined"
-                  onClick={showEventCreateModal}
-                >
-                  이벤트 등록
-                </Button>
+                {STORAGEAUTH === "INTERVIEW" ? null : (
+                  <Button
+                    sx={TBTN}
+                    variant="outlined"
+                    onClick={showEventCreateModal}
+                  >
+                    이벤트 등록
+                  </Button>
+                )}
                 <EventExcelDownload
                   apiKey={apiKey}
                   EVENTSEARCHALL={EVENTSEARCHALL}
@@ -612,9 +654,11 @@ const Home = () => {
                     <TableCell align="center" sx={TCELL}>
                       진행 현황
                     </TableCell>
-                    <TableCell align="center" sx={TCELL}>
-                      수정/삭제
-                    </TableCell>
+                    {STORAGEAUTH === "INTERVIEW" ? null : (
+                      <TableCell align="center" sx={TCELL}>
+                        수정/삭제
+                      </TableCell>
+                    )}
                   </TableRow>
                 </TableHead>
               </Table>
@@ -659,22 +703,24 @@ const Home = () => {
                             {event.EventTime}
                           </TableCell>
                           <TableCell align="center">{event.Proceed}</TableCell>
-                          <TableCell align="center">
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickEventAlt}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickEventDel}
-                            >
-                              삭제
-                            </Button>
-                          </TableCell>
+                          {STORAGEAUTH === "INTERVIEW" ? null : (
+                            <TableCell align="center">
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickEventAlt}
+                              >
+                                수정
+                              </Button>
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickEventDel}
+                              >
+                                삭제
+                              </Button>
+                            </TableCell>
+                          )}
                         </TableRow>
                       </TableHead>
                     </Table>
@@ -746,13 +792,16 @@ const Home = () => {
                 <Button type="submit" sx={TBTN} variant="outlined">
                   공지 검색
                 </Button>
-                <Button
-                  sx={TBTN}
-                  variant="outlined"
-                  onClick={NoticeCreateModal}
-                >
-                  공지 등록
-                </Button>
+                {STORAGEAUTH === "INTERVIEW" ? null : (
+                  <Button
+                    sx={TBTN}
+                    variant="outlined"
+                    onClick={NoticeCreateModal}
+                  >
+                    공지 등록
+                  </Button>
+                )}
+
                 <NoticeExcelDownload
                   apiKey={apiKey}
                   NOTICESEARCHALL={NOTICESEARCHALL}
@@ -786,9 +835,11 @@ const Home = () => {
                     <TableCell align="center" sx={TCELL}>
                       날짜
                     </TableCell>
-                    <TableCell align="center" sx={TCELL}>
-                      수정/삭제
-                    </TableCell>
+                    {STORAGEAUTH === "INTERVIEW" ? null : (
+                      <TableCell align="center" sx={TCELL}>
+                        수정/삭제
+                      </TableCell>
+                    )}
                   </TableRow>
                 </TableHead>
               </Table>
@@ -811,22 +862,24 @@ const Home = () => {
                           <TableCell align="center">{notice.Title}</TableCell>
                           <TableCell align="center">{notice.Desc}</TableCell>
                           <TableCell align="center">{notice.Date}</TableCell>
-                          <TableCell align="center">
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickWriteAlt}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              sx={TCBTN}
-                              variant="outlined"
-                              onClick={onClickWriteDel}
-                            >
-                              삭제
-                            </Button>
-                          </TableCell>
+                          {STORAGEAUTH === "INTERVIEW" ? null : (
+                            <TableCell align="center">
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickWriteAlt}
+                              >
+                                수정
+                              </Button>
+                              <Button
+                                sx={TCBTN}
+                                variant="outlined"
+                                onClick={onClickWriteDel}
+                              >
+                                삭제
+                              </Button>
+                            </TableCell>
+                          )}
                         </TableRow>
                       </TableHead>
                     </Table>
