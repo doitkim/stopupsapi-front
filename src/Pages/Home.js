@@ -387,11 +387,13 @@ const Home = () => {
                 로그아웃
               </Button>
             </ButtonGroup>
-            <ButtonGroup orientation="vertical">
-              <Button sx={SIDEBUTTON} onClick={leaveUser}>
-                회원 탈퇴
-              </Button>
-            </ButtonGroup>
+            {smsAuth ? (
+              <ButtonGroup orientation="vertical">
+                <Button sx={SIDEBUTTON} onClick={leaveUser}>
+                  회원 탈퇴
+                </Button>
+              </ButtonGroup>
+            ) : null}
           </Stack>
         </Box>
         <Box className={style.mainMenuWrap}>

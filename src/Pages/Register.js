@@ -12,24 +12,52 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { encrypt, decrypt } from "../Crypto/chiper"; // DB에 저장 시 암호화, 조회시 복호화
 import { Link, useNavigate } from "react-router-dom"; // 회원 가입 취소 및 페이지 렌더링 시 사용
+import { useState } from "react";
+import { Alert, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 const API = process.env.REACT_APP_API;
 const theme = createTheme();
 const RULEID = process.env.REACT_APP_RULE_ID;
 const RULEPW = process.env.REACT_APP_RULE_PW;
 const RULEHP = process.env.REACT_APP_RULE_HP;
+
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [regEmail, setRegEmail] = useState(false);
+  const [regPassword, setRegPassword] = useState(false);
+  const [regPhone, setRegPhone] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowPhoneNumber = () => setShowPhoneNumber((show) => !show);
+  const handleMouseDownPhoneNumber = (event) => {
+    event.preventDefault();
+  };
   const navigate = useNavigate(); // 페이지 렌더링에 이용
+  const onChangeEmail = (e) => {
+    setRegEmail(regexId.test(e.target.value));
+  };
+  const onChangePassword = (e) => {
+    setRegPassword(regexPW.test(e.target.value));
+  };
+  const onChangePhone = (e) => {
+    setRegPhone(regexHP.test(e.target.value));
+  };
+
+  const regexId = new RegExp(RULEID);
+  const regexPW = new RegExp(RULEPW);
+  const regexHP = new RegExp(RULEHP);
   const onSubmit = async (e) => {
     e.preventDefault();
     let accessToken = Math.floor(Date.now() + Math.random() * 100 + 100); // 회원가입 시 accessToken 생성
     accessToken = accessToken.toString(); // 문자열로 변환
-    let regexId = new RegExp(RULEID);
-    let regexPW = new RegExp(RULEPW);
-    let regexHP = new RegExp(RULEHP);
     // 아이디 패스워드 값 저장
     const userId = e.target.email.value;
     const userPw = e.target.password.value;
     const phoneNumber = e.target.phoneNumber.value;
+
     if (
       regexId.test(userId) &&
       regexPW.test(userPw) &&
@@ -51,10 +79,7 @@ const Register = () => {
       if (userId !== "" && userPw !== "" && found) {
         // 아이디, 비밀번호가 공백이 아니고 DB에 계정이 존재하면
         alert("이미 가입된 관리자 계정입니다.");
-        // 사용자 입력 값 초기화
-        e.target.email.value = "";
-        e.target.password.value = "";
-        e.target.phoneNumber.value = "";
+        window.location.reload();
       } else {
         try {
           // POST로 암호화된 회원가입 정보 전달
@@ -69,13 +94,11 @@ const Register = () => {
         } catch (error) {
           console.error(error);
         }
-        // 사용자 입력값 초기화
-        e.target.email.value = "";
-        e.target.password.value = "";
-        e.target.phoneNumber.value = "";
       }
     } else {
       alert("올바른 형식이 아닙니다.");
+      // 사용자 입력값 초기화
+      window.location.reload();
     }
   };
   const WRAP = {
@@ -116,28 +139,80 @@ const Register = () => {
                     label="이메일"
                     name="email"
                     autoComplete="email"
+                    onChange={onChangeEmail}
                   />
                 </Grid>
+                {regEmail ? null : (
+                  <Grid item xs={12}>
+                    <Alert severity="error">올바른 형식을 사용하세요.</Alert>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
+                    onChange={onChangePassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
+                {regPassword ? null : (
+                  <Grid item xs={12}>
+                    <Alert severity="error">
+                      8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.
+                    </Alert>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     name="phoneNumber"
                     label="phoneNumber"
-                    type="password"
+                    type={showPhoneNumber ? "text" : "password"}
                     autoComplete="phoneNumber"
+                    onChange={onChangePhone}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPhoneNumber}
+                            onMouseDown={handleMouseDownPhoneNumber}
+                          >
+                            {showPhoneNumber ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
+                {regPhone ? null : (
+                  <Grid item xs={12}>
+                    <Alert severity="error">
+                      올바른 형식을 사용하세요. ex) 01012341234
+                    </Alert>
+                  </Grid>
+                )}
               </Grid>
               <Button
                 type="submit"

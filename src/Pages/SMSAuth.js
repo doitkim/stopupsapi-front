@@ -2,7 +2,16 @@ import axios from "axios";
 import { useState } from "react"; // 상태 값 저장
 import { useNavigate } from "react-router-dom"; // 페이지 리렌더링 용도
 import { decrypt } from "../Crypto/chiper";
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 const API = process.env.REACT_APP_API;
 const INTERVIEW = process.env.REACT_APP_INTERVIEW;
 
@@ -11,6 +20,28 @@ const SMSAuth = () => {
   const [rnd, setRnd] = useState(""); // 임의의 비밀번호 4자리 값 저장
   const [authForm, setAuthForm] = useState(false); // 인증 상태 값 저장
   const navigate = useNavigate(); // 페이지 리렌더링 용도
+  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [showAuthNumber, setShowAuthNumber] = useState(false);
+  const [showAuthAdminNumber, setAuthAdminNumber] = useState(false);
+  const [regPhone, setRegPhone] = useState(false);
+  const RULEHP = process.env.REACT_APP_RULE_HP;
+  const regexHP = new RegExp(RULEHP);
+  const onChangePhone = (e) => {
+    setRegPhone(regexHP.test(e.target.value));
+  };
+  const handleClickShowPhoneNumber = () => setShowPhoneNumber((show) => !show);
+  const handleMouseDownPhoneNumber = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowAuthNumber = () => setShowAuthNumber((show) => !show);
+  const handleMouseDownAuthNumber = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowAuthAdminNumber = () =>
+    setAuthAdminNumber((show) => !show);
+  const handleMouseDownAuthAdminNumber = (event) => {
+    event.preventDefault();
+  };
 
   const phoneSubmit = async (e) => {
     // SMS 인증
@@ -103,8 +134,22 @@ const SMSAuth = () => {
                 required
                 autoFocus
                 fullWidth
+                type={showAuthNumber ? "text" : "password"}
                 sx={TEXTFEILD}
                 label="인증 번호 인증"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowAuthNumber}
+                        onMouseDown={handleMouseDownAuthNumber}
+                      >
+                        {showAuthNumber ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <TextField
                 size="small"
@@ -112,8 +157,26 @@ const SMSAuth = () => {
                 required
                 autoFocus
                 fullWidth
+                type={showAuthAdminNumber ? "text" : "password"}
                 sx={TEXTFEILD}
                 label="관리자 번호 인증"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowAuthAdminNumber}
+                        onMouseDown={handleMouseDownAuthAdminNumber}
+                      >
+                        {showAuthAdminNumber ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               <Button
                 type="submit"
@@ -132,6 +195,21 @@ const SMSAuth = () => {
                 required
                 autoFocus
                 fullWidth
+                type={showPhoneNumber ? "text" : "password"}
+                onChange={onChangePhone}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPhoneNumber}
+                        onMouseDown={handleMouseDownPhoneNumber}
+                      >
+                        {showPhoneNumber ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 sx={{
                   mb: 1,
                   "& .MuiOutlinedInput-root": {
@@ -145,6 +223,13 @@ const SMSAuth = () => {
                 }}
                 label="휴대폰 번호 인증"
               />
+              {regPhone ? null : (
+                <Grid item xs={12}>
+                  <Alert severity="error">
+                    올바른 형식을 사용하세요. ex) 01012341234
+                  </Alert>
+                </Grid>
+              )}
               <Button type="submit" sx={ENROLL} variant="outlined" fullWidth>
                 전송
               </Button>

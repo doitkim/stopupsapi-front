@@ -1,6 +1,6 @@
 {
   "name": "stopupsapi-front",
-  "version": "2.4.3",
+  "version": "2.7.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",

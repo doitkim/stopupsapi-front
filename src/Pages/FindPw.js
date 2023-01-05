@@ -13,17 +13,32 @@ import axios from "axios";
 import { encrypt, decrypt } from "../Crypto/chiper"; // DB에 저장 시 암호화, 조회시 복호화
 import { useNavigate } from "react-router-dom"; // 회원 가입 취소 및 페이지 렌더링 시 사용
 import { useState } from "react";
+import { Alert, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 const API = process.env.REACT_APP_API;
 const theme = createTheme();
-const RULEID = process.env.REACT_APP_RULE_ID;
-const RULEPW = process.env.REACT_APP_RULE_PW;
-const RULEHP = process.env.REACT_APP_RULE_HP;
 const FindPw = () => {
   const navigate = useNavigate(); // 페이지 렌더링에 이용
   const [rnd, setRnd] = useState(""); // 임의의 비밀번호 4자리 값 저장
   const [auth, setAuth] = useState(false);
   const [password, setPassword] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const [regEmail, setRegEmail] = useState(false);
+  const [regPhone, setRegPhone] = useState(false);
+  const RULEID = process.env.REACT_APP_RULE_ID;
+  const RULEHP = process.env.REACT_APP_RULE_HP;
+  const RULEPW = process.env.REACT_APP_RULE_PW;
+  const regexId = new RegExp(RULEID);
+  const regexHP = new RegExp(RULEHP);
+
+  const onChangeEmail = (e) => {
+    setRegEmail(regexId.test(e.target.value));
+  };
+
+  const onChangePhone = (e) => {
+    setRegPhone(regexHP.test(e.target.value));
+  };
 
   const chpassword = async (e) => {
     const chpw =
@@ -31,10 +46,12 @@ const FindPw = () => {
     let regexPW = new RegExp(RULEPW);
     if (regexPW.test(chpw)) {
       const eUserPhoneNumber = userInfo.userPhoneNumber;
+      const eUserId = userInfo.userId;
       const eUserPw = encrypt(chpw);
       try {
         // 회원 정보 업데이트
         await axios.post(API + "/users/update", {
+          eUserId,
           eUserPw,
           eUserPhoneNumber,
         });
@@ -54,6 +71,11 @@ const FindPw = () => {
       setAuth(!auth);
       setPassword(!password);
     }
+  };
+
+  const handleClickShowPhoneNumber = () => setShowPhoneNumber((show) => !show);
+  const handleMouseDownPhoneNumber = (event) => {
+    event.preventDefault();
   };
 
   const onSubmit = async (e) => {
@@ -99,7 +121,7 @@ const FindPw = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: "33.7vh",
+              marginBottom: "28.5vh",
             }}
           >
             <Avatar
@@ -119,17 +141,48 @@ const FindPw = () => {
                     label="이메일"
                     name="email"
                     autoComplete="email"
+                    onChange={onChangeEmail}
                   />
                 </Grid>
+                {regEmail ? null : (
+                  <Grid item xs={12}>
+                    <Alert severity="error">올바른 형식을 사용하세요.</Alert>
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
                     name="phoneNumber"
                     label="phoneNumber"
-                    type="password"
+                    type={showPhoneNumber ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPhoneNumber}
+                            onMouseDown={handleMouseDownPhoneNumber}
+                          >
+                            {showPhoneNumber ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={onChangePhone}
                   />
                 </Grid>
+                {regPhone ? null : (
+                  <Grid item xs={12}>
+                    <Alert severity="error">
+                      올바른 형식을 사용하세요. ex) 01012341234
+                    </Alert>
+                  </Grid>
+                )}
               </Grid>
               <Button
                 type="submit"
@@ -141,6 +194,16 @@ const FindPw = () => {
                 }}
               >
                 비밀번호 재설정
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{
+                  mb: 3,
+                }}
+                onClick={() => navigate("/")}
+              >
+                취소
               </Button>
               {auth ? (
                 <Box
