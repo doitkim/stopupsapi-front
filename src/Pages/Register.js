@@ -107,6 +107,7 @@ const Register = () => {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    height: "412px",
   };
   const AVARTAR = {
     m: 1,

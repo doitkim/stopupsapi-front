@@ -122,6 +122,7 @@ const FindPw = () => {
               flexDirection: "column",
               alignItems: "center",
               marginBottom: "28.5vh",
+              height: "376px",
             }}
           >
             <Avatar
