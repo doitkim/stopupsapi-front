@@ -24,8 +24,13 @@ const Login = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false); // 로그인 상태 저장
   const [showPassword, setShowPassword] = useState(false);
+  const [showAuthNumber, setShowAuthNumber] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowAccessNumber = () => setShowAuthNumber((show) => !show);
+  const handleMouseDownAccessNumber = (event) => {
     event.preventDefault();
   };
   useEffect(() => {
@@ -42,9 +47,15 @@ const Login = () => {
     // DOM의 태그들의 이름의 값 저장
     const userId = e.target.email.value; // 사용자 이메일 입력
     const userPw = e.target.password.value; // 사용자 비밀번호 입력
+    const accessNumber = e.target.accessNumber.value; // 사용자 비밀번호 입력
+    const currentNumber = process.env.REACT_APP_ACCESSNUMBER;
     const API = process.env.REACT_APP_API; // 사용자 할당 API 키
     // 입력한 사용자 정보 형식 검증
-    if (regexId.test(userId) && regexPW.test(userPw)) {
+    if (
+      regexId.test(userId) &&
+      regexPW.test(userPw) &&
+      accessNumber === currentNumber
+    ) {
       // 유저 정보 조회
       const res = await axios.get(API + "/users");
       const users = res.data;
@@ -62,15 +73,15 @@ const Login = () => {
       e.target.email.value = "";
       e.target.password.value = "";
     } else {
-      alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
+      alert("올바른 정보가 아닙니다.");
     }
   };
   const LOGINBOX = {
-    marginTop: "24.7vh",
+    marginTop: "20.2vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "34.5vh",
+    marginBottom: "20.1vh",
   };
   const AVARTAR = {
     m: 1,
@@ -126,6 +137,28 @@ const Login = () => {
                         onMouseDown={handleMouseDownPassword}
                       >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="accessNumber"
+                label="접근 번호"
+                type={showAuthNumber ? "text" : "password"}
+                autoComplete="current-password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle access number visibility"
+                        onClick={handleClickShowAccessNumber}
+                        onMouseDown={handleMouseDownAccessNumber}
+                      >
+                        {showAuthNumber ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
