@@ -102,12 +102,12 @@ const Register = () => {
     }
   };
   const WRAP = {
-    marginTop: "24.7vh",
-    marginBottom: "28.3vh",
+    marginTop: "10.4vh",
+    marginBottom: "10.4vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "412px",
+    height: "600px",
   };
   const AVARTAR = {
     m: 1,

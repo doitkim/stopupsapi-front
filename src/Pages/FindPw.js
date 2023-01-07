@@ -117,11 +117,11 @@ const FindPw = () => {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: "27.6vh",
+              marginTop: "11.6vh",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: "28.5vh",
+              marginBottom: "33.6vh",
               height: "376px",
             }}
           >

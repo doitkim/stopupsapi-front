@@ -77,11 +77,11 @@ const Login = () => {
     }
   };
   const LOGINBOX = {
-    marginTop: "20.2vh",
+    marginTop: "10.2vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "20.1vh",
+    marginBottom: "30.1vh",
   };
   const AVARTAR = {
     m: 1,
