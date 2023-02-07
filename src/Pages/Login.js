@@ -19,7 +19,6 @@ const RULEID = process.env.REACT_APP_RULE_ID; // ID 룰 (이메일 형식)
 const RULEPW = process.env.REACT_APP_RULE_PW; // PW룰 (8~16자 특수문자 포함 대소문자 포함)
 let regexId = new RegExp(RULEID); // 검증
 let regexPW = new RegExp(RULEPW); // 검증
-
 const Login = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false); // 로그인 상태 저장
