@@ -1,9 +1,9 @@
 import CryptoJS from "crypto-js";
 
-const keySize = 256;
-const ivSize = 128;
-const iterations = 100;
-const secret = "0123456789";
+const keySize = Number(process.env.REACT_APP_KEYSIZE);
+const ivSize = Number(process.env.REACT_APP_IVSIZE);
+const iterations = Number(process.env.REACT_APP_ITERATIONS);
+const secret = process.env.REACT_APP_SECRET;
 
 function encrypt(msg) {
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
