@@ -81,9 +81,6 @@ const EventAlter = ({ menu, API }) => {
   return (
     <form onSubmit={onSubmit} style={ALTERFORM}>
       <Box>
-        <Box sx={Title}>
-          <h1>이벤트 수정</h1>
-        </Box>
         <TextField
           size="small"
           name="작성일자"

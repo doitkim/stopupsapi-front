@@ -268,9 +268,6 @@ const MenuAlter = ({ menu, API }) => {
   return (
     <form onSubmit={onSubmit} style={MENUCREATE}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4" }}>
-          <h1>제품 수정</h1>
-        </Box>
         <TextField
           size="small"
           name="Category"

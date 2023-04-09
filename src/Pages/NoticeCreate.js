@@ -67,9 +67,6 @@ const NoticeCreate = ({ valid, API }) => {
   return (
     <form onSubmit={onSubmit} style={NOTICECREATE}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4" }}>
-          <h1>공지 사항 등록</h1>
-        </Box>
         <TextField
           name="게시글ID"
           value={Date.now() + count++}

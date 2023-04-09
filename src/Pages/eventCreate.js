@@ -69,9 +69,6 @@ const EventCreate = ({ valid, API }) => {
   return (
     <form onSubmit={eventCreate} style={CREATEFORM}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={{ bgcolor: "#316ca4" }}>
-          <h1>이벤트 등록</h1>
-        </Box>
         <TextField
           name="작성일자"
           value={dateString}

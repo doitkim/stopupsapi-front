@@ -226,9 +226,6 @@ const MenuCreate = ({ apiKey, API, MENUSEARCHALL }) => {
   return (
     <form onSubmit={menuCreate} style={MENUCREATE}>
       <Box sx={{ color: "#5498d8" }}>
-        <Box sx={TITLE}>
-          <h1>제품 등록</h1>
-        </Box>
         <TextField
           size="small"
           name="Category"

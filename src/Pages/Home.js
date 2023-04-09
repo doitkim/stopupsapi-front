@@ -31,6 +31,7 @@ import {
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import style from "../CSS/Home/Home.module.css";
+const TITLE = { bgcolor: "#316ca4", minWidth: "752px" };
 
 const Home = () => {
   const [apiKey, setApiKey] = useState(""); // API 키 값 상태 저장
@@ -562,19 +563,25 @@ const Home = () => {
         className={style.Modal}
       >
         {/* 메뉴 등록 */}
+
         <MenuCreate apiKey={apiKey} API={API} MENUSEARCHALL={MENUSEARCHALL} />
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowMenuCreate(!showMenuCreate);
-            setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
-          }}
-        >
-          닫기
-        </Button>
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>제품 등록</h1>
+          </Box>
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              setShowMenuCreate(!showMenuCreate);
+              setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
       <Modal
         isOpen={showMenuAlter}
@@ -582,19 +589,24 @@ const Home = () => {
         className={style.Modal}
       >
         <MenuAlter menu={menuInfo} API={API} />
-        {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowMenuAlter(!showMenuAlter);
-            setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
-          }}
-        >
-          닫기
-        </Button>
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>제품 수정</h1>
+          </Box>
+          {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              setShowMenuAlter(!showMenuAlter);
+              setMenuList(await (await axios.get(apiKey + MENUSEARCH)).data);
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
       {eventModal ? (
         <>
@@ -746,18 +758,27 @@ const Home = () => {
           apiKey={apiKey}
           EVENTSEARCHALL={EVENTSEARCHALL}
         />
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowEventCreate(!showEventCreate);
-            setEventList(await (await axios.get(apiKey + EVENTSEARCHALL)).data);
-          }}
-        >
-          닫기
-        </Button>
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>이벤트 등록</h1>
+          </Box>
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              setShowEventCreate(!showEventCreate);
+              setEventList(
+                await (
+                  await axios.get(apiKey + EVENTSEARCHALL)
+                ).data
+              );
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
       <Modal
         isOpen={showEventAlter}
@@ -765,19 +786,28 @@ const Home = () => {
         className={style.Modal}
       >
         <EventAlter menu={menuInfo} API={API} />
-        {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowEventAlter(!showEventAlter);
-            setEventList(await (await axios.get(apiKey + EVENTSEARCHALL)).data);
-          }}
-        >
-          닫기
-        </Button>
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>이벤트 수정</h1>
+          </Box>
+          {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              setShowEventAlter(!showEventAlter);
+              setEventList(
+                await (
+                  await axios.get(apiKey + EVENTSEARCHALL)
+                ).data
+              );
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
       {/* 모달 사용 */}
       {noticeModal ? (
@@ -900,19 +930,24 @@ const Home = () => {
       >
         {/* 사이트 공지사항 등록 */}
         <NoticeCreate valid={noticeList} API={API} />
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            const notice = await axios.get(apiKey + NOTICESEARCHALL);
-            setNoticeList(notice.data);
-            setNoticeCreateModal(!noticeCreateModal);
-          }}
-        >
-          닫기
-        </Button>
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>공지 사항 등록</h1>
+          </Box>
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              const notice = await axios.get(apiKey + NOTICESEARCHALL);
+              setNoticeList(notice.data);
+              setNoticeCreateModal(!noticeCreateModal);
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
       <Modal
         isOpen={showWriteAlter}
@@ -921,22 +956,28 @@ const Home = () => {
       >
         <NoticeAlter menu={menuInfo} API={API} />
         {/* 수정할 메뉴의 정보를 넘겨 받아 출력 */}
-        <Button
-          size="small"
-          sx={EXITBTN}
-          variant="outlined"
-          onClick={async () => {
-            // 닫을 때 목록 갱신을 위해 전체 조회
-            setShowWriteAlter(!showWriteAlter);
-            setNoticeList(
-              await (
-                await axios.get(apiKey + NOTICESEARCHALL)
-              ).data
-            );
-          }}
-        >
-          닫기
-        </Button>
+
+        <div className={style.modalTitle}>
+          <Box sx={TITLE}>
+            <h1>공지 수정</h1>
+          </Box>
+          <Button
+            size="small"
+            sx={EXITBTN}
+            variant="outlined"
+            onClick={async () => {
+              // 닫을 때 목록 갱신을 위해 전체 조회
+              setShowWriteAlter(!showWriteAlter);
+              setNoticeList(
+                await (
+                  await axios.get(apiKey + NOTICESEARCHALL)
+                ).data
+              );
+            }}
+          >
+            닫기
+          </Button>
+        </div>
       </Modal>
     </>
   );

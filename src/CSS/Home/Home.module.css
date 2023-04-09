@@ -20,7 +20,7 @@
 
 .Modal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
@@ -50,4 +50,10 @@
   background-size: cover;
   height: 63.4vh;
   min-width: 800px;
+}
+
+.modalTitle {
+  display: flex;
+  color: #5498d8;
+  text-align: center;
 }
